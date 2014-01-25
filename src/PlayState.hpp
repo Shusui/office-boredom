@@ -8,9 +8,9 @@
 
 #include "Game.hpp"
 #include "State.hpp"
+#include "Player.hpp"
 
-class PlayState : public State
-{
+class PlayState : public State {
   private:
     Game *game;
 
@@ -19,6 +19,8 @@ class PlayState : public State
     int windowWidth;
     int windowHeight;
 
+    Player *player;
+    
   public:
     PlayState(Game *_game);
 
