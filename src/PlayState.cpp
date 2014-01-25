@@ -14,6 +14,9 @@ PlayState::PlayState(Game *_game) {
   /* Set up player, map and other stuff */
   player = new Player();
   tilemap = new Tilemap(game, "res/level1.txt", 20, 15);
+
+  activeEnemies = 0;
+  spawnCooldown = 0;
 }
 
 void PlayState::setup() {
@@ -22,8 +25,22 @@ void PlayState::setup() {
 
 void PlayState::update() {
   sf::Vector2i mouse = sf::Mouse::getPosition(game->window);
-
+  if (activeEnemies < 10 && spawnCooldown == 0) {
+    srand(time(NULL));
+    enemies[activeEnemies] = new Enemy(rand() % 400 + 200, rand() % 300 + 100);
+    activeEnemies++;
+    spawnCooldown = 120;
+  }
+  
   player->update();
+
+  for (int i = 0; i < activeEnemies; i++) {
+    enemies[i]->update();
+  }
+
+  if (spawnCooldown > 0) {
+    spawnCooldown--;
+  }
 }
 
 void PlayState::draw() {
@@ -38,6 +55,10 @@ void PlayState::draw() {
 
   tilemap->draw();
   game->window.draw(player->sprite);
+
+  for (int i = 0; i < activeEnemies; i++) {
+    game->window.draw(enemies[i]->sprite);
+  }
   
   /* Display */
   game->window.display();

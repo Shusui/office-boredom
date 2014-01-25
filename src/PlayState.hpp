@@ -5,10 +5,12 @@
 #include <sstream>
 #include <string>
 #include <cmath>
+#include <time.h>
 
 #include "Game.hpp"
 #include "State.hpp"
 #include "Player.hpp"
+#include "Enemy.hpp"
 #include "Tilemap.hpp"
 
 class PlayState : public State {
@@ -21,6 +23,10 @@ class PlayState : public State {
     int windowHeight;
 
     Player *player;
+    Enemy *enemies[10];
+    int activeEnemies;
+    int spawnCooldown;
+    
     Tilemap *tilemap;
     
   public:
