@@ -23,8 +23,6 @@ class PlayState : public State {
     int windowWidth;
     int windowHeight;
 
-    Player *player;
-    Enemy *enemies[10];
     int activeEnemies;
     int spawnCoolDown;
     
@@ -33,6 +31,8 @@ class PlayState : public State {
     
   public:
     Tilemap *tilemap;
+    Player *player;
+    Enemy *enemies[10];
     
     PlayState(Game *_game);
 

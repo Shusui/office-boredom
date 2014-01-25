@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Collision.hpp"
+#include "AStar.hpp"
 
 class PlayState;
 
@@ -13,6 +14,7 @@ class Enemy: public Collision {
   private:
     sf::Texture texture;
     PlayState *state;
+    AStar *as;
 
     float x;
     float y;
@@ -25,6 +27,7 @@ class Enemy: public Collision {
     void update();
     bool checkCollision(sf::FloatRect);
     void wallCollision(float,float);
+    void pathToTarget();
 
     sf::Sprite sprite;
 };
