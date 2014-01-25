@@ -6,7 +6,7 @@ GameOverState::GameOverState(Game *_game) {
 
   gameOverText.setFont(game->arialFont);
   gameOverText.setCharacterSize(70);
-  gameOverText.setPosition(70, 200);
+  gameOverText.setPosition(130, 200);
   gameOverText.setString("You're Fired!");
 }
 
