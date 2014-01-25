@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #include "Collision.hpp"
 
@@ -13,6 +14,9 @@ class Player: public Collision {
     int x;
     int y;
     int speed;
+
+    sf::SoundBuffer buffer;
+    sf::Sound satisfactionSound;
 
   public:
     Player();

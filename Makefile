@@ -1,6 +1,6 @@
 CXX = g++ -std=c++11
 CXXFLAGS = -g -Wall
-CXXLIBS = -lsfml-window -lsfml-graphics -lsfml-system
+CXXLIBS = -lsfml-window -lsfml-graphics -lsfml-system -lsfml-audio
 SRCDIR = src
 BUILDDIR = build
 SRC_DIRS = $(shell find $(SRCDIR) -type d)
