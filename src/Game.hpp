@@ -7,7 +7,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "State.hpp"
-#include "PlayState.hpp"
 
 using namespace std;
 

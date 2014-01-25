@@ -21,7 +21,6 @@ void PlayState::setup()
 void PlayState::update()
 {
   sf::Vector2i mouse = sf::Mouse::getPosition(game->window);
-
 }
 
 void PlayState::draw()
