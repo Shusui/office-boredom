@@ -19,5 +19,9 @@ void GameOverState::update() {
 }
 
 void GameOverState::draw() {
+  game->window.clear();
+
   game->window.draw(gameOverText);
+
+  game->window.display();
 }

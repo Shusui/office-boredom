@@ -60,6 +60,7 @@ void Player::update() {
 
   if (satisfaction > 199) {
     game->currentState = new GameOverState(game);
+    satisfactionSound.stop();
   }
   
   sprite.setPosition(x, y);
