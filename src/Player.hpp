@@ -4,18 +4,21 @@
 #include <stdio.h>
 #include <SFML/Graphics.hpp>
 
-class Player {
+#include "Collision.hpp"
+
+class Player: public Collision {
   private:
     sf::Texture texture;
 
     int x;
     int y;
     int speed;
-    
+
   public:
     Player();
 
     void update();
+    bool checkCollision(sf::FloatRect);
 
     sf::Sprite sprite;
 };

@@ -5,19 +5,22 @@
 #include <time.h>
 #include <SFML/Graphics.hpp>
 
-class Enemy {
-	private:
-		sf::Texture texture;
+#include "Collision.hpp"
 
-		int x;
-		int y;
-		int speedX;
+class Enemy: public Collision {
+  private:
+    sf::Texture texture;
+
+    int x;
+    int y;
+    int speedX;
     int speedY;
 
-	public:
+  public:
     Enemy(int _x, int _y);
 
     void update();
+    bool checkCollision(sf::FloatRect);
 
     sf::Sprite sprite;
 };
