@@ -3,14 +3,19 @@ CXXFLAGS = -g -Wall
 CXXLIBS = -lsfml-window -lsfml-graphics -lsfml-system
 SRCDIR = src
 BUILDDIR = build
-CPP_FILES = $(wildcard $(SRCDIR)/*.cpp)
-OBJ_FILES = $(addprefix $(BUILDDIR)/,$(notdir $(CPP_FILES:.cpp=.o)))
+SRC_DIRS = $(shell find $(SRCDIR) -type d)
+BUILD_DIRS = $(subst src,build,$(SRC_DIRS))
+CPP_FILES = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cpp))
+OBJ_FILES = $(subst src,build,$(CPP_FILES:.cpp=.o))
+#OBJ_FILES = $(addprefix $(BUILDDIR)/,$(notdir $(CPP_FILES:.cpp=.o)))
 
 all: dirs $(OBJ_FILES)
 	$(CXX) $(CXXFLAGS) $(BUILDDIR)/main.o -o $(BUILDDIR)/main $(CXXLIBS) 
 
 dirs:
-	mkdir -p $(BUILDDIR)
+	@for dir in $(BUILD_DIRS); do \
+		mkdir -p $$dir; \
+	done
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
