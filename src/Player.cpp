@@ -22,6 +22,11 @@ Player::Player() {
   satisfactionFill.setFillColor(sf::Color(255, 0, 0, 30));
 }
 
+Player::~Player() {
+  buffer.~SoundBuffer();
+  satisfactionSound.~Sound();
+}
+
 void Player::update() {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
     x -= speed;

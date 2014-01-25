@@ -20,6 +20,7 @@ class Player: public Collision {
 
   public:
     Player();
+    ~Player();
 
     void update();
     bool checkCollision(sf::FloatRect);
