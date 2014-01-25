@@ -36,8 +36,8 @@ void PlayState::draw() {
   fps.setString(fpsStream.str());
   game->window.draw(fps);
 
-  game->window.draw(player->sprite);
   tilemap->draw();
+  game->window.draw(player->sprite);
   
   /* Display */
   game->window.display();

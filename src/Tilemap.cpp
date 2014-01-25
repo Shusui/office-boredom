@@ -1,7 +1,9 @@
 #include "Tilemap.hpp"
 
-Tilemap::Tilemap(Game *_game, const char *fileName, int width, int height) {
+Tilemap::Tilemap(Game *_game, const char *fileName, int _width, int _height) {
   game = _game;
+  width = _width;
+  height = _height;
   
   FILE *mapFile = fopen(fileName, "r");
   

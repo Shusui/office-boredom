@@ -13,7 +13,7 @@ class Tilemap {
     Game *game;
     
   public:
-    Tilemap(Game *_game, const char *fileName, int width, int height);
+    Tilemap(Game *_game, const char *fileName, int _width, int _height);
     void draw();
 
     int rawMap[MAX_HEIGHT][MAX_WIDTH];
