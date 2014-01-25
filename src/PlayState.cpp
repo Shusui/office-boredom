@@ -26,8 +26,6 @@ void PlayState::setup() {
 }
 
 void PlayState::update() {
-  sf::Vector2i mouse = sf::Mouse::getPosition(game->window);
-
   if (activeEnemies < 10 && spawnCoolDown == 0) {
     srand(time(NULL));
     enemies[activeEnemies] = new Enemy(rand() % 400 + 200, rand() % 300 + 100);
