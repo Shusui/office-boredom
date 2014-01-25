@@ -3,6 +3,7 @@
 
 #include "Game.hpp"
 #include "State.hpp"
+#include "PlayState.hpp"
 
 class TitleState : public State {
   private:

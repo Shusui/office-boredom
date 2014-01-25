@@ -12,7 +12,7 @@ PlayState::PlayState(Game *_game) {
   gameClockText.setColor(sf::Color::White);
 
   /* Set up player, map and other stuff */
-  player = new Player();
+  player = new Player(game);
   tilemap = new Tilemap(game, "res/level1.txt", 20, 15);
 
   activeEnemies = 0;

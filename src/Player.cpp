@@ -1,6 +1,7 @@
 #include "Player.hpp"
 
-Player::Player() {
+Player::Player(Game *_game) {
+  game = _game;
   x = 0;
   y = 0;
   speed = 3;
@@ -57,6 +58,10 @@ void Player::update() {
   /* Handle satisfaction */
   satisfactionFill.setSize(sf::Vector2f(satisfaction, 30));
 
+  if (satisfaction > 199) {
+    game->currentState = new GameOverState(game);
+  }
+  
   sprite.setPosition(x, y);
 }
 

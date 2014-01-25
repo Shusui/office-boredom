@@ -5,10 +5,14 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
+#include "Game.hpp"
 #include "Collision.hpp"
+#include "GameOverState.hpp"
 
 class Player: public Collision {
   private:
+    Game *game;
+
     sf::Texture texture;
 
     int x;
@@ -19,7 +23,7 @@ class Player: public Collision {
     sf::Sound satisfactionSound;
 
   public:
-    Player();
+    Player(Game *_game);
     ~Player();
 
     void update();

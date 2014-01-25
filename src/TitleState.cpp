@@ -1,5 +1,4 @@
 #include "TitleState.hpp"
-#include "PlayState.hpp"
 
 TitleState::TitleState(Game *_game) {
   game = _game;
