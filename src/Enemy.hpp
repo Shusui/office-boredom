@@ -7,20 +7,24 @@
 
 #include "Collision.hpp"
 
+class PlayState;
+
 class Enemy: public Collision {
   private:
     sf::Texture texture;
+    PlayState *state;
 
-    int x;
-    int y;
+    float x;
+    float y;
     int speedX;
     int speedY;
 
   public:
-    Enemy(int _x, int _y);
+    Enemy(PlayState*, float _x, float _y);
 
     void update();
     bool checkCollision(sf::FloatRect);
+    void wallCollision(float,float);
 
     sf::Sprite sprite;
 };

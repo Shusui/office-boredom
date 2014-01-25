@@ -12,8 +12,8 @@ PlayState::PlayState(Game *_game) {
   gameClockText.setColor(sf::Color::White);
 
   /* Set up player, map and other stuff */
-  player = new Player(game);
   tilemap = new Tilemap(game, "res/level1.txt", 20, 15);
+  player = new Player(game,this);
 
   activeEnemies = 0;
   spawnCoolDown = 0;
@@ -28,7 +28,7 @@ void PlayState::setup() {
 void PlayState::update() {
   if (activeEnemies < 10 && spawnCoolDown == 0) {
     srand(time(NULL));
-    enemies[activeEnemies] = new Enemy(rand() % 400 + 200, rand() % 300 + 100);
+    enemies[activeEnemies] = new Enemy(this,rand() % 400 + 200, rand() % 300 + 100);
     activeEnemies++;
     spawnCoolDown = 120;
   }

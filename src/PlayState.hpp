@@ -28,11 +28,12 @@ class PlayState : public State {
     int activeEnemies;
     int spawnCoolDown;
     
-    Tilemap *tilemap;
 
     sf::Clock gameClock;
     
   public:
+    Tilemap *tilemap;
+    
     PlayState(Game *_game);
 
     void setup();
