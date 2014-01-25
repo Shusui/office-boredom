@@ -31,3 +31,7 @@ void Enemy::update() {
 
   sprite.setPosition(x, y);
 }
+
+bool Enemy::checkCollision(sf::FloatRect other){
+	return sprite.getGlobalBounds().intersects(other);
+}

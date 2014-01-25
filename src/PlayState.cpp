@@ -41,6 +41,19 @@ void PlayState::update() {
   if (spawnCooldown > 0) {
     spawnCooldown--;
   }
+
+	for (int i = 0; i < activeEnemies; i++){
+		if(player->checkCollision(enemies[i]->sprite.getGlobalBounds())){
+			printf("COLLISION ENEMY!");
+		}
+	}
+	for (int y = 0; y < tilemap->height ; y++){
+		for (int x = 0; x < activeEnemies; x++){
+			if(player->checkCollision(tilemap->map[y][x].getGlobalBounds())){
+				printf("COLLISION WALL!");
+			}
+		}
+	}
 }
 
 void PlayState::draw() {

@@ -5,7 +5,9 @@
 #include <time.h>
 #include <SFML/Graphics.hpp>
 
-class Enemy {
+#include "Collision.hpp"
+
+class Enemy: public Collision {
 	private:
 		sf::Texture texture;
 
@@ -18,6 +20,7 @@ class Enemy {
     Enemy(int _x, int _y);
 
     void update();
+		bool checkCollision(sf::FloatRect);
 
     sf::Sprite sprite;
 };

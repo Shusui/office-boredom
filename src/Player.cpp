@@ -32,3 +32,7 @@ void Player::update() {
 
   sprite.setPosition(x, y);
 }
+
+bool Player::checkCollision(sf::FloatRect other){
+	return sprite.getGlobalBounds().intersects(other);
+}

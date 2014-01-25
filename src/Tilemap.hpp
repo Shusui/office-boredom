@@ -16,6 +16,7 @@ class Tilemap {
     Tilemap(Game *_game, const char *fileName, int _width, int _height);
     void draw();
 
+		sf::RectangleShape map[MAX_HEIGHT][MAX_WIDTH];
     int rawMap[MAX_HEIGHT][MAX_WIDTH];
     int width;
     int height;
