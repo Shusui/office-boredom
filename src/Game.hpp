@@ -7,7 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "State.hpp"
-#include "SpriteFactory.hpp"
+#include "TextureFactory.hpp"
 
 using namespace std;
 
@@ -33,7 +33,7 @@ class Game {
     bool scrolledUp;
     bool scrolledDown;
 
-    SpriteFactory mySpriteFactory;
+    TextureFactory myTextureFactory;
 };
 
 #endif

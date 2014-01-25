@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Game.hpp"
+
 enum TileType {
   GROUND = 0,
   WALL = 1,
@@ -10,12 +12,14 @@ enum TileType {
 
 class Tile {
   private:
-    sf::Texture texture;
-    
+    Game *game;
+
+    sf::Texture *texture;
+
   public:
-    Tile(int _type);
-    Tile(int _type, char tileName[]);
-    
+    Tile(Game *_game, int _type);
+    Tile(Game *_game, int _type, char tileName[]);
+
     TileType type;
     sf::Sprite sprite;
 };

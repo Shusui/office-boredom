@@ -15,8 +15,8 @@ Player::Player(Game *_game, PlayState *_state) {
   satisfactionSound.setBuffer(buffer);
   satisfactionSound.setLoop(true);
 
-  texture.loadFromFile("res/player.png");
-  sprite.setTexture(texture);
+  texture = game->myTextureFactory.findTexture("player");
+  sprite.setTexture(*texture);
   sprite.scale(0.70, 0.70);
 
   srand(time(NULL));
@@ -26,8 +26,8 @@ Player::Player(Game *_game, PlayState *_state) {
     y = (int)(rand() % state->tilemap->height);
   } while (state->tilemap->rawMap[(int) y][(int) x]->type != GROUND);
 
-  x = x*state->tilemap->tileSize;
-  y = y*state->tilemap->tileSize;
+  x = x * state->tilemap->tileSize;
+  y = y * state->tilemap->tileSize;
   sprite.setPosition(x, y);
 
   satisfaction = 0;
@@ -48,6 +48,7 @@ Player::~Player() {
 void Player::update() {
   float old_x = x;
   float old_y = y;
+
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
     x -= speed;
   }
@@ -95,12 +96,13 @@ bool Player::checkCollision(sf::FloatRect other) {
 
 void Player::wallCollision(float old_x, float old_y) {
   sprite.setPosition(x, old_y);
+
   for (int ty = 0; ty < state->tilemap->height; ty++){
     for (int tx = 0; tx < state->tilemap->width; tx++){
       if(state->tilemap->rawMap[ty][tx]->type == WALL &&
          this->checkCollision(state->tilemap->rawMap[ty][tx]->sprite.getGlobalBounds())) {
         if (x > old_x) {
-          x = state->tilemap->rawMap[ty][tx]->sprite.getPosition().x - sprite.getLocalBounds().width*sprite.getScale().x;
+          x = state->tilemap->rawMap[ty][tx]->sprite.getPosition().x - sprite.getLocalBounds().width * sprite.getScale().x;
         } else if (x < old_x) {
           x = state->tilemap->rawMap[ty][tx]->sprite.getPosition().x + state->tilemap->tileSize;
         } else {
@@ -132,6 +134,7 @@ void Player::wallCollision(float old_x, float old_y) {
   }
 
   sprite.setPosition(x, y);
+
   for (int ty = 0;ty < state->tilemap->height; ty++){
     for (int tx = 0;tx < state->tilemap->width; tx++){
       if (state->tilemap->rawMap[ty][tx]->type == WALL &&
@@ -145,7 +148,7 @@ void Player::wallCollision(float old_x, float old_y) {
         }
 
         if (y > old_y) {
-          y = state->tilemap->rawMap[ty][tx]->sprite.getPosition().y - sprite.getLocalBounds().height*sprite.getScale().y;
+          y = state->tilemap->rawMap[ty][tx]->sprite.getPosition().y - sprite.getLocalBounds().height * sprite.getScale().y;
         } else if (y < old_y) {
           y = state->tilemap->rawMap[ty][tx]->sprite.getPosition().y + state->tilemap->tileSize;
         } else {

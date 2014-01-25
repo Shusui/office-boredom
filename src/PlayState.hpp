@@ -28,7 +28,6 @@ class PlayState : public State {
     int activeEnemies;
     int spawnCoolDown;
     
-
     sf::Clock gameClock;
     
   public:
