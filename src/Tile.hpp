@@ -14,7 +14,8 @@ class Tile {
     
   public:
     Tile(int _type);
-
+    Tile(int _type, char tileName[]);
+    
     TileType type;
     sf::Sprite sprite;
 };
