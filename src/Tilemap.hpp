@@ -11,6 +11,7 @@ class Tilemap {
   
   public:
     Tilemap(const char *fileName, int width, int height);
+    void draw();
 
     int rawMap[MAX_HEIGHT][MAX_WIDTH];
     int width;

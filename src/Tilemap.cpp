@@ -14,3 +14,7 @@ Tilemap::Tilemap(const char *fileName, int width, int height) {
 
   fclose(mapFile);
 }
+
+void Tilemap::draw() {
+  
+}

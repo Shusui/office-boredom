@@ -9,6 +9,7 @@
 #include "Game.hpp"
 #include "State.hpp"
 #include "Player.hpp"
+#include "Tilemap.hpp"
 
 class PlayState : public State {
   private:
@@ -20,6 +21,7 @@ class PlayState : public State {
     int windowHeight;
 
     Player *player;
+    Tilemap *tilemap;
     
   public:
     PlayState(Game *_game);

@@ -11,8 +11,9 @@ PlayState::PlayState(Game *_game) {
   fps.setPosition(windowWidth - 38, 2);
   fps.setColor(sf::Color::White);
 
-  /* Set up player */
+  /* Set up player, map and other stuff */
   player = new Player();
+  tilemap = new Tilemap("res/level1.txt", 20, 15);
 }
 
 void PlayState::setup() {
@@ -36,7 +37,8 @@ void PlayState::draw() {
   game->window.draw(fps);
 
   game->window.draw(player->sprite);
-
+  tilemap->draw();
+  
   /* Display */
   game->window.display();
 }
