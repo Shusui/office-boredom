@@ -11,7 +11,7 @@ Player::Player(Game *_game, PlayState *_state) {
   y = 0;
   speed = 5;
 
-  buffer.loadFromFile("res/satisfactionSound.wav");
+  buffer.loadFromFile("res/satisfaction_sound.wav");
   satisfactionSound.setBuffer(buffer);
   satisfactionSound.setLoop(true);
 
