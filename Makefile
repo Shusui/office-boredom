@@ -9,7 +9,7 @@ CPP_FILES = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cpp))
 OBJ_FILES = $(subst src,build,$(CPP_FILES:.cpp=.o))
 
 all: dirs $(OBJ_FILES)
-	$(CXX) $(CXXFLAGS) $(BUILDDIR)/Game.o -o $(BUILDDIR)/main $(CXXLIBS) 
+	$(CXX) $(CXXFLAGS) $(BUILDDIR)/*.o -o $(BUILDDIR)/main $(CXXLIBS) 
 
 dirs:
 	@for dir in $(BUILD_DIRS); do \
