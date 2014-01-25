@@ -43,20 +43,6 @@ void PlayState::update() {
     spawnCoolDown--;
   }
 
-  for (int i = 0; i < activeEnemies; i++) {
-    if (player->checkCollision(enemies[i]->sprite.getGlobalBounds())) {
-      //printf("COLLISION ENEMY!\n");
-    }
-  }
-
-  for (int y = 0; y < tilemap->height; y++) {
-    for (int x = 0; x < activeEnemies; x++) {
-      if (player->checkCollision(tilemap->rawMap[y][x]->sprite.getGlobalBounds())) {
-        //printf("COLLISION WALL!\n");
-      }
-    }
-  }
-
   int countDownSeconds = 120 - gameClock.getElapsedTime().asSeconds();
   gameClockString = std::to_string((int) floor(countDownSeconds / 60)) + ":"
     + std::to_string((int) (countDownSeconds - floor(countDownSeconds / 60) * 60));

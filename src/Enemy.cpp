@@ -20,9 +20,11 @@ void Enemy::update() {
   x += speedX;
   y += speedY;
 
+  printf("Speed before: %d %d\n", speedX,speedY);
   wallCollision(old_x,old_y);
+  printf("Speed after: %d %d\n", speedX,speedY);
 
-  if (x < 0) {
+  /*if (x < 0) {
     x = 0;
     speedX *= (-1);
   } else if (x > 608) {
@@ -36,7 +38,7 @@ void Enemy::update() {
   } else if (y > 448) {
     y = 448;
     speedY *= (-1);
-  }
+  }*/
 
   sprite.setPosition(x, y);
 }
@@ -58,11 +60,12 @@ void Enemy::wallCollision(float old_x, float old_y){
         } else {
           x = old_x;
         }
-        speedX *= -1;        
-        break;  
+        speedX = speedX*(-1);
+        return; 
       }
     }
   }
+  
   sprite.setPosition(old_x, y);
   for(int ty = 0;ty < state->tilemap->height;ty++){
     for(int tx = 0;tx < state->tilemap->width; tx++){
@@ -75,12 +78,11 @@ void Enemy::wallCollision(float old_x, float old_y){
         } else {
           y = old_y;
         }
-        speedY *= -1;        
-        break;  
+        speedY *= (-1);
+        return;  
       }
     }
   }
-
   sprite.setPosition(x, y);
   for(int ty = 0;ty < state->tilemap->height;ty++){
     for(int tx = 0;tx < state->tilemap->width; tx++){
@@ -101,11 +103,10 @@ void Enemy::wallCollision(float old_x, float old_y){
         } else {
           y = old_y;
         }
-        speedX *= -1;        
-        speedY *= -1;        
-        break;  
+        return;
       }
     }
   }
+
 }
 

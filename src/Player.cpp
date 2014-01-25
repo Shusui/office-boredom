@@ -64,6 +64,8 @@ void Player::update() {
   
   wallCollision(old_x,old_y);
   sprite.setPosition(x,y);
+  
+  if(x!=old_x || y!=old_y) return;
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
     satisfaction++;
