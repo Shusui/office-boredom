@@ -11,6 +11,7 @@ Enemy::Enemy(PlayState *_state,float _x, float _y) {
 
   texture.loadFromFile("res/enemy.png");
   sprite.setTexture(texture);
+  sprite.setScale(0.5,0.5);
 }
 
 void Enemy::update() {
@@ -20,9 +21,7 @@ void Enemy::update() {
   x += speedX;
   y += speedY;
 
-  printf("Speed before: %d %d\n", speedX,speedY);
   wallCollision(old_x,old_y);
-  printf("Speed after: %d %d\n", speedX,speedY);
 
   /*if (x < 0) {
     x = 0;
@@ -103,6 +102,8 @@ void Enemy::wallCollision(float old_x, float old_y){
         } else {
           y = old_y;
         }
+        speedX *= (-1);
+        speedY *= (-1);
         return;
       }
     }
