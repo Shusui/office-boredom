@@ -13,7 +13,7 @@ PlayState::PlayState(Game *_game) {
 
   /* Set up player, map and other stuff */
   player = new Player();
-  tilemap = new Tilemap("res/level1.txt", 20, 15);
+  tilemap = new Tilemap(game, "res/level1.txt", 20, 15);
 }
 
 void PlayState::setup() {
