@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "TitleState.hpp"
 #include "PlayState.hpp"
 
 Game::Game() {
@@ -15,7 +16,7 @@ Game::Game() {
 
   arialFont.loadFromFile("res/arial.ttf");
   
-  currentState = new PlayState(this);
+  currentState = new TitleState(this);
   lastTime = 0;
 }
 
