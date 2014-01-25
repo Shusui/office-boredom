@@ -10,7 +10,7 @@ Tilemap::Tilemap(Game *_game, const char *fileName, int _width, int _height) {
   int x, y;
   for (y = 0; y < height; y++) {
     for (x = 0; x < width; x++) {
-      fscanf(mapFile, "%d", &rawMap[y][x]);
+      fscanf(mapFile, "%1d", &rawMap[y][x]);
     }
 
     fscanf(mapFile, "\n"); // Skip newlines
@@ -30,9 +30,10 @@ void Tilemap::draw() {
       rectangle.setPosition(x * tileSize, y * tileSize);
       
       if (rawMap[y][x] == 0) {
-        rectangle.setFillColor(sf::Color::Black);
+        sf::Color grayColor = sf::Color(211, 211, 211);
+        rectangle.setFillColor(grayColor);
       } else if (rawMap[y][x] == 1) {
-        rectangle.setFillColor(sf::Color::White);
+        rectangle.setFillColor(sf::Color::Black);
       }
 
       game->window.draw(rectangle);
