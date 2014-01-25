@@ -13,7 +13,6 @@ Enemy::Enemy(PlayState *_state,float _x, float _y) {
   sprite.setTexture(texture);
   sprite.setScale(0.5,0.5);
   sprite.setPosition(x,y);
-  //as = new AStar(state->tilemap,&(this->sprite),&(state->player->sprite));
 }
 
 void Enemy::update() {
@@ -132,17 +131,17 @@ void Enemy::pathToTarget(){
   gscore.push_back(0);
 
   while(openset.size()>0){
-    int min = fscore.get(0);
-    int idx = 0
-    for(int i=1;i<fscore.size();i++){
-      if(fscore.get(i) < min){
-        min = fscore.get(i);
+    int min = fscore[0];
+    int idx = 0;
+    for(int i=1;i<(int)fscore.size();i++){
+      if(fscore[i] < min){
+        min = fscore[i];
         idx = i;
       }
     }
     sf::Vector2f current;
-    current.x = openset.get(idx).x;
-    current.y = openset.get(idx).y;
+    current.x = openset[idx].x;
+    current.y = openset[idx].y;
 
     for(y = current.y-1; y <= current.y+1;y++){
       for(x = current.x-1; x <= current.x+1;x++){
