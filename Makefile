@@ -7,7 +7,7 @@ CPP_FILES = $(wildcard $(SRCDIR)/*.cpp)
 OBJ_FILES = $(addprefix $(BUILDDIR)/,$(notdir $(CPP_FILES:.cpp=.o)))
 
 all: dirs $(OBJ_FILES)
-	$(CXX) $(CXXFLAGS) $(CXXLIBS) $(BUILDDIR)/main.o -o $(BUILDDIR)/main
+	$(CXX) $(CXXFLAGS) $(BUILDDIR)/main.o -o $(BUILDDIR)/main $(CXXLIBS) 
 
 dirs:
 	mkdir -p $(BUILDDIR)
