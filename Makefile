@@ -3,8 +3,10 @@ CXXFLAGS = -g -Wall
 CXXLIBS = -lsfml-window -lsfml-graphics -lsfml-system
 SRCDIR = src
 BUILDDIR = build
+CPP_FILES = $(wildcard $(SRCDIR)/*.cpp)
+OBJ_FILES = $(addprefix $(BUILDDIR)/,$(notdir $(CPP_FILES:.cpp=.o)))
 
-all: dirs $(BUILDDIR)/main.o
+all: dirs $(OBJ_FILES)
 	$(CXX) $(CXXFLAGS) $(CXXLIBS) $(BUILDDIR)/main.o -o $(BUILDDIR)/main
 
 dirs:
