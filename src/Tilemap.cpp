@@ -12,15 +12,13 @@ Tilemap::Tilemap(Game *_game, const char *fileName, int _width, int _height) {
   for (y = 0; y < height; y++) {
     for (x = 0; x < width; x++) {
       fscanf(mapFile, "%1d", &currentTile);
-      rawMap[y][x] = new Tile(currentTile);
+      rawMap[y][x] = new Tile(game, currentTile);
       rawMap[y][x]->sprite.setPosition(x * tileSize, y * tileSize);
     }
 
     fscanf(mapFile, "\n"); // Skip newlines
   }
-
-  printf("\n");
-  
+  draw();
   fclose(mapFile);
 }
 

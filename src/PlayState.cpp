@@ -13,12 +13,14 @@ PlayState::PlayState(Game *_game) {
 
   /* Set up player, map and other stuff */
   tilemap = new Tilemap(game, "res/level1.txt", 20, 15);
-  player = new Player(game,this);
+  player = new Player(game, this);
 
   activeEnemies = 0;
   spawnCoolDown = 0;
 
   gameClock.restart();
+
+  //std::string spriteNameArray[] = {"res/desk.png", "res/tile1.png", "res/tilewall_14.png", "res/tilewall_19.png", "res/tilewall_4.png", "res/tilewall_9.png", "res/enemy.png",   "res/tilewall_10.png",  "res/tilewall_15.png",  "res/tilewall_1.png", "res/tilewall_5.png", "res/heart.png", "res/tilewall_11.png", "res/tilewall_16.png", "res/tilewall_20.png", "res/tilewall_6.png", "res/player.png", "res/tilewall_12.png", "res/tilewall_17.png", "res/tilewall_2.png", "res/tilewall_7.png", "res/tile0.png", "res/tilewall_13.png", "res/tilewall_18.png", "res/tilewall_3.png", "res/tilewall_8.png"};
 }
 
 void PlayState::setup() {
@@ -56,7 +58,7 @@ void PlayState::draw() {
   game->window.draw(player->sprite);
   game->window.draw(player->satisfactionOutline);
   game->window.draw(player->satisfactionFill);
-  
+
   for (int i = 0; i < activeEnemies; i++) {
     game->window.draw(enemies[i]->sprite);
   }

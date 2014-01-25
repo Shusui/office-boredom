@@ -15,7 +15,7 @@ Game::Game() {
   windowFocused = true;
 
   arialFont.loadFromFile("res/arial.ttf");
-  
+
   currentState = new TitleState(this);
   lastTime = 0;
 }

@@ -22,8 +22,6 @@ class Player: public Collision {
     Game *game;
     PlayState *state;
 
-    sf::Texture texture;
-
     float x;
     float y;
     int speed;
@@ -39,6 +37,7 @@ class Player: public Collision {
     bool checkCollision(sf::FloatRect);
     void wallCollision(float,float);
 
+    sf::Texture *texture;
     sf::Sprite sprite;
 
     int satisfaction;
