@@ -1,10 +1,9 @@
 #include "Game.hpp"
 #include "PlayState.hpp"
 
-Game::Game()
-{
+Game::Game() {
   title = "Office Boredom";
-  window.create(sf::VideoMode(1000, 640, 1), title.c_str(),
+  window.create(sf::VideoMode(640, 480, 1), title.c_str(),
                 sf::Style::Titlebar | sf::Style::Close);
 
   window.setFramerateLimit(60);
@@ -14,32 +13,28 @@ Game::Game()
 
   windowFocused = true;
 
+  arialFont.loadFromFile("res/arial.ttf");
+  
   currentState = new PlayState(this);
   lastTime = 0;
 }
 
-void Game::run()
-{
+void Game::run() {
   currentState->setup();
 
-  while (window.isOpen())
-  {
+  while (window.isOpen()) {
     sf::Event event;
 
-    while (window.pollEvent(event))
-    {
-      if (event.type == sf::Event::Closed)
-      {
+    while (window.pollEvent(event)) {
+      if (event.type == sf::Event::Closed) {
         window.close();
       }
 
-      if (event.type == sf::Event::LostFocus)
-      {
+      if (event.type == sf::Event::LostFocus) {
         windowFocused = false;
       }
 
-      if (event.type == sf::Event::GainedFocus)
-      {
+      if (event.type == sf::Event::GainedFocus) {
         windowFocused = true;
       }
     }
@@ -54,8 +49,7 @@ void Game::run()
   }
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   Game *game = new Game();
   game->run();
 

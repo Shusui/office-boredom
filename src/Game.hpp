@@ -10,8 +10,7 @@
 
 using namespace std;
 
-class Game
-{
+class Game {
   private:
     string title;
 
@@ -26,7 +25,6 @@ class Game
     float fps;
 
     sf::Font arialFont;
-    sf::Font pixelFont;
 
     bool scrolledUp;
     bool scrolledDown;

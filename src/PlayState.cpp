@@ -27,7 +27,7 @@ void PlayState::draw()
 {
   /* Clear the screen */
   game->window.clear();
-
+  
   /* Draw FPS */
   stringstream fpsStream;
   fpsStream << ceil(game->fps) << " fps";
