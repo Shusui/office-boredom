@@ -8,19 +8,19 @@
 #include "Collision.hpp"
 
 class Enemy: public Collision {
-	private:
-		sf::Texture texture;
+  private:
+    sf::Texture texture;
 
-		int x;
-		int y;
-		int speedX;
+    int x;
+    int y;
+    int speedX;
     int speedY;
 
-	public:
+  public:
     Enemy(int _x, int _y);
 
     void update();
-		bool checkCollision(sf::FloatRect);
+    bool checkCollision(sf::FloatRect);
 
     sf::Sprite sprite;
 };

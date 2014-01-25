@@ -31,7 +31,7 @@ void PlayState::update() {
     activeEnemies++;
     spawnCooldown = 120;
   }
-  
+
   player->update();
 
   for (int i = 0; i < activeEnemies; i++) {
@@ -42,18 +42,19 @@ void PlayState::update() {
     spawnCooldown--;
   }
 
-	for (int i = 0; i < activeEnemies; i++){
-		if(player->checkCollision(enemies[i]->sprite.getGlobalBounds())){
-			printf("COLLISION ENEMY!");
-		}
-	}
-	for (int y = 0; y < tilemap->height ; y++){
-		for (int x = 0; x < activeEnemies; x++){
-			if(player->checkCollision(tilemap->map[y][x].getGlobalBounds())){
-				printf("COLLISION WALL!");
-			}
-		}
-	}
+  for (int i = 0; i < activeEnemies; i++) {
+    if(player->checkCollision(enemies[i]->sprite.getGlobalBounds())) {
+      printf("COLLISION ENEMY!\n");
+    }
+  }
+
+  for (int y = 0; y < tilemap->height; y++){
+    for (int x = 0; x < activeEnemies; x++){
+      if(player->checkCollision(tilemap->map[y][x].getGlobalBounds())) {
+        printf("COLLISION WALL!\n");
+      }
+    }
+  }
 }
 
 void PlayState::draw() {
@@ -72,7 +73,7 @@ void PlayState::draw() {
   for (int i = 0; i < activeEnemies; i++) {
     game->window.draw(enemies[i]->sprite);
   }
-  
+
   /* Display */
   game->window.display();
 }

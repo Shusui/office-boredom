@@ -13,12 +13,12 @@ class Player: public Collision {
     int x;
     int y;
     int speed;
-    
+
   public:
     Player();
 
     void update();
-		bool checkCollision(sf::FloatRect);
+    bool checkCollision(sf::FloatRect);
 
     sf::Sprite sprite;
 };

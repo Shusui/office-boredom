@@ -15,13 +15,16 @@ Enemy::Enemy(int _x, int _y) {
 void Enemy::update() {
   x += speedX;
   y += speedY;
+
   if (x < 0) {
     x = 0;
     speedX *= (-1);
   } else if (x > 608) {
     x = 608;
     speedX *= (-1);
-  } if (y < 0) {
+  }
+
+  if (y < 0) {
     y = 0;
     speedY *= (-1);
   } else if (y > 448) {
@@ -32,6 +35,6 @@ void Enemy::update() {
   sprite.setPosition(x, y);
 }
 
-bool Enemy::checkCollision(sf::FloatRect other){
-	return sprite.getGlobalBounds().intersects(other);
+bool Enemy::checkCollision(sf::FloatRect other) {
+  return sprite.getGlobalBounds().intersects(other);
 }

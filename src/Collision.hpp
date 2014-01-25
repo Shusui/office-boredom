@@ -8,7 +8,7 @@ class Collision {
   private:
 
   public:
-		virtual bool checkCollision(sf::FloatRect);
+    virtual bool checkCollision(sf::FloatRect);
 };
 
 #endif
