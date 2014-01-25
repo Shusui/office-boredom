@@ -17,17 +17,19 @@ Player::Player(Game *_game, PlayState *_state) {
 
   texture.loadFromFile("res/player.png");
   sprite.setTexture(texture);
-  sprite.scale(0.70,0.70);
+  sprite.scale(0.70, 0.70);
 
   srand(time(NULL));
-  do{
+
+  do {
     x = (int)(rand() % state->tilemap->width);
     y = (int)(rand() % state->tilemap->height);
-  } while(state->tilemap->rawMap[(int)y][(int)x]->type!=GROUND);
+  } while (state->tilemap->rawMap[(int) y][(int) x]->type != GROUND);
+
   x = x*state->tilemap->tileSize;
   y = y*state->tilemap->tileSize;
-  sprite.setPosition(x,y);
-  
+  sprite.setPosition(x, y);
+
   satisfaction = 0;
   satisfactionOutline.setPosition(5, 5);
   satisfactionOutline.setSize(sf::Vector2f(200, 30));
@@ -61,11 +63,11 @@ void Player::update() {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
     y += speed;
   }
-  
-  wallCollision(old_x,old_y);
-  sprite.setPosition(x,y);
-  
-  if(x!=old_x || y!=old_y) return;
+
+  wallCollision(old_x, old_y);
+  sprite.setPosition(x, y);
+
+  if(x != old_x || y != old_y) return;
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
     satisfaction++;
@@ -80,74 +82,78 @@ void Player::update() {
   /* Handle satisfaction */
   satisfactionFill.setSize(sf::Vector2f(satisfaction, 30));
 
-  if (satisfaction > 199) {
+  if (satisfaction == 200) {
     game->currentState = new GameOverState(game);
     satisfactionSound.stop();
   }
-  
+
 }
 
 bool Player::checkCollision(sf::FloatRect other) {
   return sprite.getGlobalBounds().intersects(other);
 }
 
-void Player::wallCollision(float old_x, float old_y){
+void Player::wallCollision(float old_x, float old_y) {
   sprite.setPosition(x, old_y);
-  for(int ty = 0;ty < state->tilemap->height;ty++){
-    for(int tx = 0;tx < state->tilemap->width; tx++){
-      if(state->tilemap->rawMap[ty][tx]->type==WALL &&
-         this->checkCollision(state->tilemap->rawMap[ty][tx]->sprite.getGlobalBounds())){
-        if(x>old_x){
+  for (int ty = 0; ty < state->tilemap->height; ty++){
+    for (int tx = 0; tx < state->tilemap->width; tx++){
+      if(state->tilemap->rawMap[ty][tx]->type == WALL &&
+         this->checkCollision(state->tilemap->rawMap[ty][tx]->sprite.getGlobalBounds())) {
+        if (x > old_x) {
           x = state->tilemap->rawMap[ty][tx]->sprite.getPosition().x - sprite.getLocalBounds().width*sprite.getScale().x;
-        } else if(x<old_x){
-          x = state->tilemap->rawMap[ty][tx]->sprite.getPosition().x+state->tilemap->tileSize;
+        } else if (x < old_x) {
+          x = state->tilemap->rawMap[ty][tx]->sprite.getPosition().x + state->tilemap->tileSize;
         } else {
           x = old_x;
         }
-        break;  
+
+        break;
       }
     }
   }
+
   sprite.setPosition(old_x, y);
-  for(int ty = 0;ty < state->tilemap->height;ty++){
-    for(int tx = 0;tx < state->tilemap->width; tx++){
-      if(state->tilemap->rawMap[ty][tx]->type==WALL &&
+
+  for (int ty = 0; ty < state->tilemap->height; ty++){
+    for (int tx = 0; tx < state->tilemap->width; tx++){
+      if (state->tilemap->rawMap[ty][tx]->type == WALL &&
          this->checkCollision(state->tilemap->rawMap[ty][tx]->sprite.getGlobalBounds())){
-        if(y>old_y){
-          y = state->tilemap->rawMap[ty][tx]->sprite.getPosition().y - sprite.getLocalBounds().height*sprite.getScale().y;
-        } else if(y<old_y){
-          y = state->tilemap->rawMap[ty][tx]->sprite.getPosition().y+state->tilemap->tileSize;
+        if (y > old_y){
+          y = state->tilemap->rawMap[ty][tx]->sprite.getPosition().y - sprite.getLocalBounds().height * sprite.getScale().y;
+        } else if (y < old_y){
+          y = state->tilemap->rawMap[ty][tx]->sprite.getPosition().y + state->tilemap->tileSize;
         } else {
           y = old_y;
         }
-        break;  
+
+        break;
       }
     }
   }
 
   sprite.setPosition(x, y);
-  for(int ty = 0;ty < state->tilemap->height;ty++){
-    for(int tx = 0;tx < state->tilemap->width; tx++){
-      if(state->tilemap->rawMap[ty][tx]->type==WALL &&
+  for (int ty = 0;ty < state->tilemap->height; ty++){
+    for (int tx = 0;tx < state->tilemap->width; tx++){
+      if (state->tilemap->rawMap[ty][tx]->type == WALL &&
          this->checkCollision(state->tilemap->rawMap[ty][tx]->sprite.getGlobalBounds())){
-        if(x>old_x){
-          x = state->tilemap->rawMap[ty][tx]->sprite.getPosition().x - sprite.getLocalBounds().width*sprite.getScale().x;
-        } else if(x<old_x){
-          x = state->tilemap->rawMap[ty][tx]->sprite.getPosition().x+state->tilemap->tileSize;
+        if (x > old_x){
+          x = state->tilemap->rawMap[ty][tx]->sprite.getPosition().x - sprite.getLocalBounds().width * sprite.getScale().x;
+        } else if (x<old_x){
+          x = state->tilemap->rawMap[ty][tx]->sprite.getPosition().x + state->tilemap->tileSize;
         } else {
           x = old_x;
         }
 
-        if(y>old_y){
+        if (y > old_y) {
           y = state->tilemap->rawMap[ty][tx]->sprite.getPosition().y - sprite.getLocalBounds().height*sprite.getScale().y;
-        } else if(y<old_y){
-          y = state->tilemap->rawMap[ty][tx]->sprite.getPosition().y+state->tilemap->tileSize;
+        } else if (y < old_y) {
+          y = state->tilemap->rawMap[ty][tx]->sprite.getPosition().y + state->tilemap->tileSize;
         } else {
           y = old_y;
         }
-        break;  
+
+        break;
       }
     }
   }
-
 }

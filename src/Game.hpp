@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "State.hpp"
+#include "SpriteFactory.hpp"
 
 using namespace std;
 
@@ -15,6 +16,9 @@ class Game {
     string title;
 
   public:
+    Game();
+    void run();
+    
     sf::RenderWindow window;
     State *currentState;
     bool windowFocused;
@@ -29,8 +33,7 @@ class Game {
     bool scrolledUp;
     bool scrolledDown;
 
-    Game();
-    void run();
+    SpriteFactory mySpriteFactory;
 };
 
 #endif
