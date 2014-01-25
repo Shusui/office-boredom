@@ -21,6 +21,10 @@ class Player: public Collision {
     bool checkCollision(sf::FloatRect);
 
     sf::Sprite sprite;
+
+    int satisfaction;
+    sf::RectangleShape satisfactionOutline;
+    sf::RectangleShape satisfactionFill;
 };
 
 #endif

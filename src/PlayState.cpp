@@ -6,17 +6,19 @@ PlayState::PlayState(Game *_game) {
   windowHeight = game->window.getSize().y;
 
   /* Set up FPS string */
-  fps.setFont(game->arialFont);
-  fps.setCharacterSize(12);
-  fps.setPosition(windowWidth - 38, 2);
-  fps.setColor(sf::Color::White);
+  gameClockText.setFont(game->arialFont);
+  gameClockText.setCharacterSize(12);
+  gameClockText.setPosition(windowWidth - 28, 2);
+  gameClockText.setColor(sf::Color::White);
 
   /* Set up player, map and other stuff */
   player = new Player();
   tilemap = new Tilemap(game, "res/level1.txt", 20, 15);
 
   activeEnemies = 0;
-  spawnCooldown = 0;
+  spawnCoolDown = 0;
+
+  gameClock.restart();
 }
 
 void PlayState::setup() {
@@ -25,11 +27,12 @@ void PlayState::setup() {
 
 void PlayState::update() {
   sf::Vector2i mouse = sf::Mouse::getPosition(game->window);
-  if (activeEnemies < 10 && spawnCooldown == 0) {
+
+  if (activeEnemies < 10 && spawnCoolDown == 0) {
     srand(time(NULL));
     enemies[activeEnemies] = new Enemy(rand() % 400 + 200, rand() % 300 + 100);
     activeEnemies++;
-    spawnCooldown = 120;
+    spawnCoolDown = 120;
   }
 
   player->update();
@@ -38,41 +41,44 @@ void PlayState::update() {
     enemies[i]->update();
   }
 
-  if (spawnCooldown > 0) {
-    spawnCooldown--;
+  if (spawnCoolDown > 0) {
+    spawnCoolDown--;
   }
 
   for (int i = 0; i < activeEnemies; i++) {
-    if(player->checkCollision(enemies[i]->sprite.getGlobalBounds())) {
-      printf("COLLISION ENEMY!\n");
+    if (player->checkCollision(enemies[i]->sprite.getGlobalBounds())) {
+      //printf("COLLISION ENEMY!\n");
     }
   }
 
-  for (int y = 0; y < tilemap->height; y++){
-    for (int x = 0; x < activeEnemies; x++){
-      if(player->checkCollision(tilemap->map[y][x].getGlobalBounds())) {
-        printf("COLLISION WALL!\n");
+  for (int y = 0; y < tilemap->height; y++) {
+    for (int x = 0; x < activeEnemies; x++) {
+      if (player->checkCollision(tilemap->rawMap[y][x]->sprite.getGlobalBounds())) {
+        //printf("COLLISION WALL!\n");
       }
     }
   }
+
+  int countDownSeconds = 120 - gameClock.getElapsedTime().asSeconds();
+  gameClockString = std::to_string((int) floor(countDownSeconds / 60)) + ":"
+    + std::to_string((int) (countDownSeconds - floor(countDownSeconds / 60) * 60));
 }
 
 void PlayState::draw() {
   /* Clear the screen */
   game->window.clear();
 
-  /* Draw FPS */
-  stringstream fpsStream;
-  fpsStream << ceil(game->fps) << " fps";
-  fps.setString(fpsStream.str());
-  game->window.draw(fps);
-
   tilemap->draw();
   game->window.draw(player->sprite);
-
+  game->window.draw(player->satisfactionOutline);
+  game->window.draw(player->satisfactionFill);
+  
   for (int i = 0; i < activeEnemies; i++) {
     game->window.draw(enemies[i]->sprite);
   }
+
+  gameClockText.setString(gameClockString);
+  game->window.draw(gameClockText);
 
   /* Display */
   game->window.display();

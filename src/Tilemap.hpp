@@ -7,6 +7,7 @@
 #include <stdio.h>
 
 #include "Game.hpp"
+#include "Tile.hpp"
 
 class Tilemap {
   private:
@@ -16,8 +17,7 @@ class Tilemap {
     Tilemap(Game *_game, const char *fileName, int _width, int _height);
     void draw();
 
-		sf::RectangleShape map[MAX_HEIGHT][MAX_WIDTH];
-    int rawMap[MAX_HEIGHT][MAX_WIDTH];
+    Tile *rawMap[MAX_HEIGHT][MAX_WIDTH];
     int width;
     int height;
     int tileSize;

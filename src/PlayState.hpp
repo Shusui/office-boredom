@@ -17,7 +17,8 @@ class PlayState : public State {
   private:
     Game *game;
 
-    sf::Text fps;
+    std::string gameClockString;
+    sf::Text gameClockText;
 
     int windowWidth;
     int windowHeight;
@@ -25,9 +26,11 @@ class PlayState : public State {
     Player *player;
     Enemy *enemies[10];
     int activeEnemies;
-    int spawnCooldown;
+    int spawnCoolDown;
     
     Tilemap *tilemap;
+
+    sf::Clock gameClock;
     
   public:
     PlayState(Game *_game);

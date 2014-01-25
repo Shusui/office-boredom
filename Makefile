@@ -1,4 +1,4 @@
-CXX = g++
+CXX = g++ -std=c++11
 CXXFLAGS = -g -Wall
 CXXLIBS = -lsfml-window -lsfml-graphics -lsfml-system
 SRCDIR = src

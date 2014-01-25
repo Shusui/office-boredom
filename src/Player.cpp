@@ -7,6 +7,15 @@ Player::Player() {
 
   texture.loadFromFile("res/player.png");
   sprite.setTexture(texture);
+
+  satisfaction = 0;
+  satisfactionOutline.setPosition(5, 5);
+  satisfactionOutline.setSize(sf::Vector2f(200, 30));
+  satisfactionOutline.setOutlineThickness(2);
+  satisfactionOutline.setOutlineColor(sf::Color(255, 0, 0, 50));
+  satisfactionOutline.setFillColor(sf::Color(0, 0, 0, 70));
+  satisfactionFill.setPosition(5, 5);
+  satisfactionFill.setFillColor(sf::Color(255, 0, 0, 30));
 }
 
 void Player::update() {
@@ -26,6 +35,13 @@ void Player::update() {
     y += speed;
   }
 
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
+    satisfaction++;
+  }
+
+  /* Handle satisfaction */
+  satisfactionFill.setSize(sf::Vector2f(satisfaction, 30));
+  
   sprite.setPosition(x, y);
 }
 

@@ -1,6 +1,5 @@
 #include "Enemy.hpp"
 
-
 Enemy::Enemy(int _x, int _y) {
   x = _x;
   y = _y;
