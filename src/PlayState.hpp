@@ -16,11 +16,13 @@
 class PlayState : public State {
   private:
     void addEnemies();
-    
+
     Game *game;
 
     std::string gameClockString;
     sf::Text gameClockText;
+
+    sf::Text levelText;
 
     sf::Clock gameClock;
 
@@ -28,11 +30,13 @@ class PlayState : public State {
     bool canGoPreviousLevel;
 
     sf::Clock beginClock;
-    
+
+    int nMaps;
+
   public:
     PlayState(Game *_game, int whichLevel);
     void reloadLevel();
-    
+
     void setup();
     void update();
     void draw();

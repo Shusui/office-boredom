@@ -12,13 +12,14 @@ class TitleState : public State {
 
     int windowWidth;
     int windowHeight;
-    
+
     sf::Text titleText;
     sf::Text pressToPlayText;
-    
+    sf::Text instructionsText;
+
   public:
     TitleState(Game *_game);
-    
+
     void setup();
     void update();
     void draw();

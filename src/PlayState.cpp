@@ -12,9 +12,16 @@ PlayState::PlayState(Game *_game, int whichLevel) {
   gameClockText.setPosition(windowWidth - 28, 2);
   gameClockText.setColor(sf::Color::White);
 
+  levelText.setFont(game->pixelFont);
+  levelText.setCharacterSize(12);
+  levelText.setPosition(2, 2);
+  levelText.setColor(sf::Color::White);
+  
   /* Set up player, map and other stuff */
   currentLevel = whichLevel;
 
+  nMaps = game->findNumberOfMaps();
+  
   setup();
 }
 
@@ -116,6 +123,10 @@ void PlayState::draw() {
   gameClockText.setString(gameClockString);
   game->window.draw(gameClockText);
 
+  std::string levelString = std::to_string(currentLevel) + "/" + std::to_string(nMaps);
+  levelText.setString(levelString);
+  game->window.draw(levelText);
+  
   /* Display */
   game->window.display();
 }

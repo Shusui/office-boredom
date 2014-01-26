@@ -81,19 +81,19 @@ void Player::update() {
   if(moved==true){
     spriteSource.x+=0.2;
     if(spriteSource.x >= (int)texture->getSize().x/spriteSize.x){
-      spriteSource.x = 0; 
+      spriteSource.x = 0;
     }
   }
 
   if((movedLeft || movedRight) && (movedTop || movedBot) && (!movedLeft || !movedRight) && (!movedTop || !movedBot)){
     y = oldY;
     x = oldX;
-    
+
     if(movedLeft)
       x -= speed*cos(3.14/4);
     else if(movedRight)
       x += speed*cos(3.14/4);
-    
+
     if(movedTop)
       y -= speed*sin(3.14/4);
     else if(movedBot)
@@ -103,33 +103,37 @@ void Player::update() {
   wallCollision(oldX, oldY);
   sprite.setTextureRect(sf::IntRect((int)floor(spriteSource.x)*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
   sprite.setPosition(x, y);
-  
-  if (!sf::Keyboard::isKeyPressed(sf::Keyboard::F)){
+
+  if (!sf::Keyboard::isKeyPressed(sf::Keyboard::F) && !moved) {
     satisfactionSound.stop();
     isSatisfying = false;
     satisfaction -= 0.25;
-    if(satisfaction<0) satisfaction=0;
+    if (satisfaction <0) satisfaction=0;
     satisfactionFill.setSize(sf::Vector2f(satisfaction, 5));
   }
-  
+
+  if (moved) {
+    satisfactionSound.stop();
+  }
+
   if (x != oldX || y != oldY) return;
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
     if (state->hasBegun) {
       isSatisfying = true;
       satisfaction += 2;
-      
+
       if (satisfactionSound.getStatus() != sf::Sound::Playing) {
 	      satisfactionSound.play();
       }
     }
-  } 
+  }
   /* Handle satisfaction */
   satisfactionFill.setSize(sf::Vector2f(satisfaction, 5));
 
   if (satisfaction >= maxSatisfaction) {
     sf::Time delayTime = sf::seconds(0.5f);
     sf::sleep(delayTime);
-    
+
     state->currentLevel++;
     state->enemies.clear();
     state->setup();

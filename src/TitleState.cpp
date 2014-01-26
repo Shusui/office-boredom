@@ -14,6 +14,11 @@ TitleState::TitleState(Game *_game) {
   pressToPlayText.setCharacterSize(17);
   pressToPlayText.setPosition(150, 330);
   pressToPlayText.setString("Press Space to start playing");
+
+  instructionsText.setFont(game->pixelFont);
+  instructionsText.setCharacterSize(17);
+  instructionsText.setPosition(150, 360);
+  instructionsText.setString("and hold F for satisfaction...");
 }
 
 void TitleState::setup() {
@@ -39,6 +44,7 @@ void TitleState::draw() {
 
   game->window.draw(titleText);
   game->window.draw(pressToPlayText);
-  
+  game->window.draw(instructionsText);
+
   game->window.display();
 }

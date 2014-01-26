@@ -42,7 +42,7 @@ class Player: public Collision {
 
     sf::Texture *texture;
     sf::Sprite sprite;
-    
+
     sf::Sound satisfactionSound;
     float satisfaction;
     bool isSatisfying;
