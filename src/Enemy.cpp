@@ -75,6 +75,28 @@ void Enemy::update() {
   x += speedX;
   y += speedY;
 
+  if(abs(speedX)>abs(speedY)){
+    if(speedX>0){
+      spriteSource.y = 2;      
+    }
+    else{
+      spriteSource.y = 3;      
+    }
+  }
+  else{
+    if(speedY>0){
+      spriteSource.y = 0;
+    }
+    else{
+      spriteSource.y = 1;
+    }
+  }
+  spriteSource.x += 0.2;
+  if(spriteSource.x*spriteSize.x>=64){
+    spriteSource.x = 0;
+  }
+  sprite.setTextureRect(sf::IntRect((int)floor(spriteSource.x)*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
+
   /*if((int)path.size()==0)
     return;
   x = path[(int)path.size()-1].x;
