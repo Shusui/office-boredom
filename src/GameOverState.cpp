@@ -1,14 +1,15 @@
 #include "GameOverState.hpp"
 #include "PlayState.hpp"
 
-GameOverState::GameOverState(Game *_game, int won) {
+GameOverState::GameOverState(Game *_game, int won, int _whichLevel) {
   /*
     won = 0, got caught
     won = 1, didn't finish in time
     won = 2, succesfully finished
    */  
   game = _game;
-
+  whichLevel = _whichLevel;
+  
   gameOverText.setFont(game->pixelFont);
 
   if (won == 0) {
@@ -40,7 +41,7 @@ void GameOverState::setup() {
 
 void GameOverState::update() {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-    game->currentState = new PlayState(game);
+    game->currentState = new PlayState(game, whichLevel);
   }
 }
 

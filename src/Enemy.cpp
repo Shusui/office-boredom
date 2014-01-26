@@ -50,7 +50,7 @@ void Enemy::update() {
   if((int)path.size()>0){
     //printf("%d\n",(int)path.size());
     if((int)path.size()<50 && state->player->isSatisfying){
-      game->currentState = new GameOverState(game,0);
+      game->currentState = new GameOverState(game, 0, state->currentLevel);
       state->player->satisfactionSound.stop();
     }
      

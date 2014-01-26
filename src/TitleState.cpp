@@ -22,7 +22,7 @@ void TitleState::setup() {
 
 void TitleState::update() {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-    game->currentState = new PlayState(game);
+    game->currentState = new PlayState(game, 1);
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {

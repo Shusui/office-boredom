@@ -1,7 +1,7 @@
 #include "PlayState.hpp"
 #include "TitleState.hpp"
 
-PlayState::PlayState(Game *_game) {
+PlayState::PlayState(Game *_game, int whichLevel) {
   game = _game;
   windowWidth = game->window.getSize().x;
   windowHeight = game->window.getSize().y;
@@ -13,14 +13,14 @@ PlayState::PlayState(Game *_game) {
   gameClockText.setColor(sf::Color::White);
 
   /* Set up player, map and other stuff */
-  currentLevel = 1;
+  currentLevel = whichLevel;
 
   setup();
 }
 
 void PlayState::setup() {
   if (currentLevel > game->findNumberOfMaps()) {
-    game->currentState = new GameOverState(game, 2);
+    game->currentState = new GameOverState(game, 2, 1);
     return;
   }
 
@@ -62,7 +62,7 @@ void PlayState::update() {
 
   if (countDownSeconds <= 0) {
     player->satisfactionSound.stop();
-    game->currentState = new GameOverState(game, 1);
+    game->currentState = new GameOverState(game, 1, currentLevel);
   }
 
   int beginCountDown = 2 - beginClock.getElapsedTime().asSeconds();

@@ -10,9 +10,11 @@ class GameOverState : public State {
 
     sf::Text gameOverText;
     sf::Text pressToPlayText;
+
+    int whichLevel;
     
   public:
-    GameOverState(Game *_game, int won);
+    GameOverState(Game *_game, int won, int _whichLevel);
 
     void setup();
     void update();

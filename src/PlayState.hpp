@@ -30,7 +30,7 @@ class PlayState : public State {
     sf::Clock beginClock;
     
   public:
-    PlayState(Game *_game);
+    PlayState(Game *_game, int whichLevel);
     void reloadLevel();
     
     void setup();
