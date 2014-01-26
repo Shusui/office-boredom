@@ -22,7 +22,7 @@ Tilemap::Tilemap(Game *_game, const char *_fileName, int _width, int _height) {
   for (y = 0; y < height; y++) {
     for (x = 0; x < width; x++) {
       currentTileType = tempMap[y][x];
-      
+
       if (currentTileType == WALL) {
         currentTileType = getWallType(x, y);
       }
@@ -30,13 +30,13 @@ Tilemap::Tilemap(Game *_game, const char *_fileName, int _width, int _height) {
       rawMap[y][x] = new Tile(game, x, y, tileSize, currentTileType);
     }
   }
-  
+
   fclose(mapFile);
 }
 
 void Tilemap::writeToFile() {
-  printf("Writing to file\n");
-  
+  printf("Writing to file called %s\n", fileName);
+
   FILE *mapFile = fopen(fileName, "w");
 
   int x, y;
@@ -72,7 +72,7 @@ int Tilemap::getWallType(int x, int y) {
     if (tempMap[y + 1][x] == 1) {
       return 12;
     }
-    
+
     return 2;
   } else if (y == 0 && x == width - 1) {
     return 9;
@@ -81,14 +81,14 @@ int Tilemap::getWallType(int x, int y) {
     if (tempMap[y][x + 1] == 1) {
       return 23;
     }
-    
+
     return 6;
   } else if (x == width - 1 && y != 0 && y != height - 1) {
 
     if (tempMap[y][x - 1]) {
       return 9;
     }
-    
+
     return 7;
   } else if (x == 0 && y == height - 1) {
     return 5;
@@ -97,7 +97,7 @@ int Tilemap::getWallType(int x, int y) {
     if (tempMap[y - 1][x] == 1) {
       return 11;
     }
-    
+
     return 10;
   } else if (x == width - 1 && y == height - 1) {
     return 4;

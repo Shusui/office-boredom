@@ -1,4 +1,5 @@
 #include "PlayState.hpp"
+#include "TitleState.hpp"
 
 PlayState::PlayState(Game *_game) {
   game = _game;
@@ -24,7 +25,7 @@ PlayState::PlayState(Game *_game) {
 }
 
 void PlayState::setup() {
-  
+
 }
 
 void PlayState::update() {
@@ -40,6 +41,13 @@ void PlayState::update() {
 
   if (countDownSeconds <= 0) {
     game->currentState = new GameOverState(game, 1);
+  }
+
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+    sf::Time delayTime = sf::seconds(0.5f);
+    sf::sleep(delayTime);
+
+    game->currentState = new TitleState(game);
   }
 }
 

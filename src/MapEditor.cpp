@@ -1,13 +1,18 @@
 #include "MapEditor.hpp"
 #include "TitleState.hpp"
 
-MapEditor::MapEditor(Game *_game) {
+MapEditor::MapEditor(Game *_game, int _level) {
   game = _game;
+  level = _level;
 
-  tilemap = new Tilemap(game, "res/level2.txt", 20, 15);
+  sprintf(fileName, "res/level%d.txt", level);
+  tilemap = new Tilemap(game, fileName, 20, 15);
 
   canWriteFile = true;
   canNewFile = true;
+
+  canGoLeft = true;
+  canGoRight = true;
 }
 
 void MapEditor::setup() {
@@ -16,15 +21,15 @@ void MapEditor::setup() {
 
 int MapEditor::findNumberOfMaps() {
   int last = 1;
-  char fileName[20];
-  sprintf(fileName, "res/level%d.txt", last);
-  FILE *lastFile = fopen(fileName, "r");
+  char tempFileName[20];
+  sprintf(tempFileName, "res/level%d.txt", last);
+  FILE *lastFile = fopen(tempFileName, "r");
 
   while (lastFile) {
     fclose(lastFile);
-    sprintf(fileName, "res/level%d.txt", ++last);
+    sprintf(tempFileName, "res/level%d.txt", ++last);
 
-    lastFile = fopen(fileName, "r");
+    lastFile = fopen(tempFileName, "r");
   }
 
   return last - 1;
@@ -56,7 +61,6 @@ void MapEditor::update() {
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
     if (canNewFile) {
-      char fileName[20];
       sprintf(fileName, "res/level%d.txt", findNumberOfMaps() + 1);
 
       FILE *newMapFile = fopen(fileName, "w");
@@ -87,12 +91,37 @@ void MapEditor::update() {
     canNewFile = true;
   }
 
-
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
     sf::Time delayTime = sf::seconds(0.5f);
     sf::sleep(delayTime);
 
     game->currentState = new TitleState(game);
+  }
+
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+    if (level != 1) {
+      if (canGoLeft) {
+        sprintf(fileName, "res/level%d.txt", --level);
+        tilemap = new Tilemap(game, fileName, 20, 15);
+
+        canGoLeft = false;
+      }
+    }
+  } else {
+    canGoLeft = true;
+  }
+
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+    if (level != findNumberOfMaps()) {
+      if (canGoRight) {
+        sprintf(fileName, "res/level%d.txt", ++level);
+        tilemap = new Tilemap(game, fileName, 20, 15);
+
+        canGoRight = false;
+      }
+    }
+  } else {
+    canGoRight = true;
   }
 }
 

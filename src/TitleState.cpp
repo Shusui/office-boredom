@@ -26,7 +26,7 @@ void TitleState::update() {
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
-    game->currentState = new MapEditor(game);
+    game->currentState = new MapEditor(game, 1);
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
