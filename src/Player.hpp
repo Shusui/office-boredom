@@ -27,7 +27,6 @@ class Player: public Collision {
     float speed;
 
     sf::SoundBuffer buffer;
-    sf::Sound satisfactionSound;
 
   public:
     Player(Game *_game, PlayState *_state);
@@ -39,7 +38,8 @@ class Player: public Collision {
 
     sf::Texture *texture;
     sf::Sprite sprite;
-
+    
+    sf::Sound satisfactionSound;
     int satisfaction;
     bool isSatisfying;
     sf::RectangleShape satisfactionOutline;
