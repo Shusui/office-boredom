@@ -23,13 +23,14 @@ class Enemy: public Collision {
     float y;
     float speedX;
     float speedY;
+    bool followPlayer;
 
     sf::Clock searchPlayerClock;
     sf::Clock randomMoveClock;
     vector<sf::Vector2f> path;
 
   public:
-    Enemy(Game*,PlayState*);
+    Enemy(Game*,PlayState*,bool);
 
     void update();
     bool checkCollision(sf::FloatRect);

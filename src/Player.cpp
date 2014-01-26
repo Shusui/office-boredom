@@ -43,51 +43,67 @@ Player::~Player() {
 void Player::update() {
   float oldX = x;
   float oldY = y;
+  bool moved = false;
+  bool movedLeft = false;
+  bool movedRight = false;
+  bool movedTop = false;
+  bool movedBot = false;
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+    moved = true;
+    movedLeft = true;
     spriteSource.y=3;
-    spriteSource.x+=0.2;
-    if(spriteSource.x >= (int)texture->getSize().x/spriteSize.x){
-      spriteSource.x = 0; 
-    }
-    
     x -= speed;
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+    moved = true;
+    movedRight = true;
     spriteSource.y=2;
-    spriteSource.x+=0.2;
-    if(spriteSource.x >= (int)texture->getSize().x/spriteSize.x){
-      spriteSource.x = 0; 
-    }
     x += speed;
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+    moved = true;
+    movedTop = true;
     spriteSource.y=1;
-    spriteSource.x+=0.2;
-    if(spriteSource.x >= (int)texture->getSize().x/spriteSize.x){
-      spriteSource.x = 0; 
-    }
     y -= speed;
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+    moved = true;
+    movedBot = true;
     spriteSource.y=0;
+    y += speed;
+  }
+
+  if(moved==true){
     spriteSource.x+=0.2;
     if(spriteSource.x >= (int)texture->getSize().x/spriteSize.x){
       spriteSource.x = 0; 
     }
-    y += speed;
   }
 
-  sprite.setTextureRect(sf::IntRect((int)floor(spriteSource.x)*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
-  //sprite.setTextureRect(sf::IntRect(spriteSource.x*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
+  if((movedLeft || movedRight) && (movedTop || movedBot) && (!movedLeft || !movedRight) && (!movedTop || !movedBot)){
+    y = oldY;
+    x = oldX;
+    
+    if(movedLeft)
+      x -= speed*cos(3.14/4);
+    else if(movedRight)
+      x += speed*cos(3.14/4);
+    
+    if(movedTop)
+      y -= speed*sin(3.14/4);
+    else if(movedBot)
+      y += speed*sin(3.14/4);
+  }
+
   wallCollision(oldX, oldY);
+  sprite.setTextureRect(sf::IntRect((int)floor(spriteSource.x)*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
   sprite.setPosition(x, y);
   
   if (x != oldX || y != oldY) return;
-
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
     isSatisfying = true;
     satisfaction += 2;
@@ -131,7 +147,6 @@ void Player::wallCollision(float oldX, float oldY) {
         } else {
           x = oldX;
         }
-
         break;
       }
     }
@@ -150,7 +165,6 @@ void Player::wallCollision(float oldX, float oldY) {
         } else {
           y = oldY;
         }
-
         break;
       }
     }

@@ -29,7 +29,10 @@ void PlayState::setup() {
   enemies.clear();
   maxEnemies = 10;
   for (int i = 0; i < maxEnemies; i++) {
-    enemies.push_back(new Enemy(game, this));
+    if(i<maxEnemies*0.3)
+      enemies.push_back(new Enemy(game, this, false));
+    else
+      enemies.push_back(new Enemy(game, this, true));
   }
 
   canGoNextLevel = true;

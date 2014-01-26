@@ -2,9 +2,10 @@
 #include "PlayState.hpp"
 #include <math.h>
 
-Enemy::Enemy(Game *_game,PlayState *_state) {
+Enemy::Enemy(Game *_game,PlayState *_state,bool _followPlayer) {
   state = _state;
   game = _game;
+  followPlayer = _followPlayer;
   speedX = (rand() % 3000 - 1500)/(float)1000;
   speedY = (rand() % 3000 - 1500)/(float)1000;
 
@@ -42,12 +43,14 @@ void Enemy::update() {
       game->currentState = new GameOverState(game,0);
       state->player->satisfactionSound.stop();
     }
-      
-    x = path[(int)path.size()-1].x;
-    y = path[(int)path.size()-1].y;
-    path.erase(path.end()-1);
-    sprite.setPosition(x, y);
-    return;
+     
+    if(followPlayer){ 
+      x = path[(int)path.size()-1].x;
+      y = path[(int)path.size()-1].y;
+      path.erase(path.end()-1);
+      sprite.setPosition(x, y);
+      return;
+    }
   }
 
   int randomMoveCountdown = 5000 - randomMoveClock.getElapsedTime().asMilliseconds();
