@@ -7,16 +7,15 @@ Enemy::Enemy(PlayState *_state,float _x, float _y) {
   x = _x;
   y = _y;
   srand(time(NULL));
-  speedX = rand() % 4 + 1;
-  speedY = rand() % 5 + 1;
+  speedX = 4;//rand() % 4 + 1;
+  speedY = 4;//rand() % 5 + 1;
 
   texture.loadFromFile("res/enemy.png");
   sprite.setTexture(texture);
   sprite.setScale(0.5,0.5);
-  //sprite.setPosition(x,y);
-  x = 0;
-  y = 0;
-  sprite.setPosition(0,0);
+  x = 2*32;
+  y = 2*32;
+  sprite.setPosition(x,y);
 }
 
 void Enemy::update() {
@@ -131,7 +130,7 @@ vector<sf::Vector2f> Enemy::reconstructPath(vector<int> came_from,vector<sf::Vec
 }
 
 vector<sf::Vector2f> Enemy::pathToTarget(){
-  int i,min,idx;
+  int i,min,idx,my,mx;
   float tx;
   float ty;
   vector<sf::Vector2f> ret;
@@ -161,7 +160,7 @@ vector<sf::Vector2f> Enemy::pathToTarget(){
   int count=0;
   while(1){
     ++count;
-    if(count==200) return ret;
+    if(count>=400) return ret;
     //printf("COUNT: %d SIZE: %d\n",++count,(int)set.size());
     for(i=0;i<(int)closed.size();i++){
       if(closed[i]==false){
@@ -196,6 +195,15 @@ vector<sf::Vector2f> Enemy::pathToTarget(){
       for(tx = current.x-speedX; tx <= current.x+speedX;tx+=speedX){
         if(tx<0) continue;
         if(tx>640) continue;
+
+        sf::FloatRect *bounds = new sf::FloatRect(tx,ty,sprite.getGlobalBounds().width,sprite.getGlobalBounds().height);
+        for(my=0;my<state->tilemap->height;my++){
+          for(mx=0;mx<state->tilemap->width;mx++){
+            if(state->tilemap->rawMap[my][mx]->type==WALL && bounds->intersects(state->tilemap->rawMap[my][mx]->sprite.getGlobalBounds())) break;
+          }
+          if(mx<state->tilemap->width) break;
+        }
+        if(my<state->tilemap->height) continue;
          
         for(i=0;i<(int)set.size();i++){
           if(set[i].x==tx && set[i].y==ty){
