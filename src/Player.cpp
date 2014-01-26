@@ -17,9 +17,9 @@ Player::Player(Game *_game, PlayState *_state) {
 
   texture = game->myTextureFactory.findTexture("player_sprites");
   sprite.setTexture(*texture);
-  spriteSource = sf::Vector2i(0,0);
+  spriteSource = sf::Vector2f(0,0);
   spriteSize = sf::Vector2i(32,32);
-  sprite.setTextureRect(sf::IntRect(spriteSource.x*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
+  sprite.setTextureRect(sf::IntRect((int)floor(spriteSource.x)*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
   do {
     x = (int)(rand() % state->tilemap->width);
     y = (int)(rand() % state->tilemap->height);
@@ -45,7 +45,8 @@ void Player::update() {
   float oldY = y;
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-    spriteSource.x++;
+    spriteSource.y=3;
+    spriteSource.x+=0.2;
     if(spriteSource.x >= (int)texture->getSize().x/spriteSize.x){
       spriteSource.x = 0; 
     }
@@ -54,7 +55,8 @@ void Player::update() {
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-    spriteSource.x++;
+    spriteSource.y=2;
+    spriteSource.x+=0.2;
     if(spriteSource.x >= (int)texture->getSize().x/spriteSize.x){
       spriteSource.x = 0; 
     }
@@ -62,24 +64,25 @@ void Player::update() {
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-    spriteSource.x++;
+    spriteSource.y=1;
+    spriteSource.x+=0.2;
     if(spriteSource.x >= (int)texture->getSize().x/spriteSize.x){
       spriteSource.x = 0; 
     }
-    spriteSource.y=1;
     y -= speed;
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-    spriteSource.x++;
+    spriteSource.y=0;
+    spriteSource.x+=0.2;
     if(spriteSource.x >= (int)texture->getSize().x/spriteSize.x){
       spriteSource.x = 0; 
     }
-    spriteSource.y=0;
     y += speed;
   }
 
-  sprite.setTextureRect(sf::IntRect(spriteSource.x*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
+  sprite.setTextureRect(sf::IntRect((int)floor(spriteSource.x)*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
+  //sprite.setTextureRect(sf::IntRect(spriteSource.x*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
   wallCollision(oldX, oldY);
   sprite.setPosition(x, y);
 

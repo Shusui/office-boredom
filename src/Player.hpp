@@ -25,7 +25,7 @@ class Player: public Collision {
     float x;
     float y;
     float speed;
-    sf::Vector2i spriteSource;
+    sf::Vector2f spriteSource;
     sf::Vector2i spriteSize;
 
     sf::SoundBuffer buffer;
