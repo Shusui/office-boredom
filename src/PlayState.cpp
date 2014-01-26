@@ -65,7 +65,7 @@ void PlayState::update() {
     game->currentState = new GameOverState(game, 1);
   }
 
-  int beginCountDown = 3 - beginClock.getElapsedTime().asSeconds();
+  int beginCountDown = 2 - beginClock.getElapsedTime().asSeconds();
 
   if (beginCountDown <= 0 && !hasBegun) {
     addEnemies();
