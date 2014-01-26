@@ -9,6 +9,7 @@ class GameOverState : public State {
     Game *game;
 
     sf::Text gameOverText;
+    sf::Text pressToPlayText;
     
   public:
     GameOverState(Game *_game, int won);

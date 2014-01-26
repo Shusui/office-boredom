@@ -6,8 +6,7 @@ GameOverState::GameOverState(Game *_game, int won) {
     won = 0, got caught
     won = 1, didn't finish in time
     won = 2, succesfully finished
-   */
-  
+   */  
   game = _game;
 
   gameOverText.setFont(game->arialFont);
@@ -21,6 +20,11 @@ GameOverState::GameOverState(Game *_game, int won) {
   } else if (won == 2) {
     gameOverText.setString("You won!");
   }
+
+  pressToPlayText.setFont(game->arialFont);
+  pressToPlayText.setCharacterSize(30);
+  pressToPlayText.setPosition(180, 330);
+  pressToPlayText.setString("Press Space to start playing");
 }
 
 void GameOverState::setup() {
@@ -28,13 +32,16 @@ void GameOverState::setup() {
 }
 
 void GameOverState::update() {
-
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+    game->currentState = new PlayState(game);
+  }
 }
 
 void GameOverState::draw() {
   game->window.clear();
 
   game->window.draw(gameOverText);
+  game->window.draw(pressToPlayText);
 
   game->window.display();
 }
