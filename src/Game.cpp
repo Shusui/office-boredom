@@ -27,6 +27,9 @@ void Game::run() {
   while (window.isOpen()) {
     sf::Event event;
 
+    scrolledUp = false;
+    scrolledDown = false;
+
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
         window.close();
@@ -38,6 +41,18 @@ void Game::run() {
 
       if (event.type == sf::Event::GainedFocus) {
         windowFocused = true;
+      }
+
+      if (event.type == sf::Event::MouseWheelMoved)
+      {
+        if (event.mouseWheel.delta > 0)
+        {
+          scrolledUp = true;
+        }
+        else if (event.mouseWheel.delta < 0)
+        {
+          scrolledDown = true;
+        }
       }
     }
 

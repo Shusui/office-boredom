@@ -17,11 +17,9 @@ Player::Player(Game *_game, PlayState *_state) {
 
   texture = game->myTextureFactory.findTexture("player_sprites");
   sprite.setTexture(*texture);
-
   spriteSource = sf::Vector2i(0,0);
   spriteSize = sf::Vector2i(32,32);
   sprite.setTextureRect(sf::IntRect(spriteSource.x*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
-
   do {
     x = (int)(rand() % state->tilemap->width);
     y = (int)(rand() % state->tilemap->height);

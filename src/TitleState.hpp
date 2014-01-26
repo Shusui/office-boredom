@@ -4,6 +4,7 @@
 #include "Game.hpp"
 #include "State.hpp"
 #include "PlayState.hpp"
+#include "MapEditor.hpp"
 
 class TitleState : public State {
   private:

@@ -1,10 +1,11 @@
 #include "Tilemap.hpp"
 
-Tilemap::Tilemap(Game *_game, const char *fileName, int _width, int _height) {
+Tilemap::Tilemap(Game *_game, const char *_fileName, int _width, int _height) {
   game = _game;
   width = _width;
   height = _height;
   tileSize = 32;
+  fileName = _fileName;
 
   FILE *mapFile = fopen(fileName, "r");
 
@@ -21,17 +22,46 @@ Tilemap::Tilemap(Game *_game, const char *fileName, int _width, int _height) {
   for (y = 0; y < height; y++) {
     for (x = 0; x < width; x++) {
       currentTileType = tempMap[y][x];
-      
+
       if (currentTileType == WALL) {
         currentTileType = getWallType(x, y);
       }
 
-      rawMap[y][x] = new Tile(game, currentTileType);
-      rawMap[y][x]->sprite.setPosition(x * tileSize, y * tileSize);
+      rawMap[y][x] = new Tile(game, x, y, tileSize, currentTileType);
     }
   }
-  
+
   fclose(mapFile);
+}
+
+void Tilemap::writeToFile() {
+  printf("Writing to file called %s\n", fileName);
+
+  FILE *mapFile = fopen(fileName, "w");
+
+  int x, y;
+  for (y = 0; y < height; y++) {
+    for (x = 0; x < width; x++) {
+      fprintf(mapFile, "%2d", tempMap[y][x]);
+    }
+
+    fprintf(mapFile, "\n");
+  }
+
+  fclose(mapFile);
+}
+
+void Tilemap::fixTiles() {
+  int x, y;
+  for (y = 0; y < height; y++) {
+    for (x = 0; x < width; x++) {
+      if (tempMap[y][x] == 1) {
+        rawMap[y][x] = new Tile(game, x, y, tileSize, getWallType(x, y));
+      } else {
+        rawMap[y][x] = new Tile(game, x, y, tileSize, 0);
+      }
+    }
+  }
 }
 
 int Tilemap::getWallType(int x, int y) {
@@ -42,7 +72,7 @@ int Tilemap::getWallType(int x, int y) {
     if (tempMap[y + 1][x] == 1) {
       return 12;
     }
-    
+
     return 2;
   } else if (y == 0 && x == width - 1) {
     return 9;
@@ -51,14 +81,14 @@ int Tilemap::getWallType(int x, int y) {
     if (tempMap[y][x + 1] == 1) {
       return 23;
     }
-    
+
     return 6;
   } else if (x == width - 1 && y != 0 && y != height - 1) {
 
     if (tempMap[y][x - 1]) {
       return 9;
     }
-    
+
     return 7;
   } else if (x == 0 && y == height - 1) {
     return 5;
@@ -67,7 +97,7 @@ int Tilemap::getWallType(int x, int y) {
     if (tempMap[y - 1][x] == 1) {
       return 11;
     }
-    
+
     return 10;
   } else if (x == width - 1 && y == height - 1) {
     return 4;
