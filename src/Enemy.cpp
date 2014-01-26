@@ -39,7 +39,7 @@ void Enemy::update() {
 
   if((int)path.size()>0){
     //printf("%d\n",(int)path.size());
-    if((int)path.size()<75 && state->player->isSatisfying){
+    if((int)path.size()<50 && state->player->isSatisfying){
       game->currentState = new GameOverState(game,0);
       state->player->satisfactionSound.stop();
     }
@@ -61,6 +61,7 @@ void Enemy::update() {
     } while(speedY==0 && speedX==0);
     randomMoveClock.restart();
   }
+
 
   x += speedX;
   y += speedY;
