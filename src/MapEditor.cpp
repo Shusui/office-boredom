@@ -82,10 +82,11 @@ void MapEditor::update() {
       tilemap = new Tilemap(game, fileName, width, height);
 
       canNewFile = false;
-    } else {
-      canNewFile = true;
     }
+  } else {
+    canNewFile = true;
   }
+
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
     sf::Time delayTime = sf::seconds(0.5f);
