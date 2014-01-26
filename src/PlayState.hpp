@@ -15,6 +15,8 @@
 
 class PlayState : public State {
   private:
+    void addEnemies();
+    
     Game *game;
 
     std::string gameClockString;
@@ -24,6 +26,8 @@ class PlayState : public State {
 
     bool canGoNextLevel;
     bool canGoPreviousLevel;
+
+    sf::Clock beginClock;
     
   public:
     PlayState(Game *_game);
@@ -42,6 +46,7 @@ class PlayState : public State {
     int windowHeight;
 
     int currentLevel;
+    bool hasBegun;
 };
 
 #endif

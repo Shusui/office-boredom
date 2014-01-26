@@ -110,11 +110,13 @@ void Player::update() {
   
   if (x != oldX || y != oldY) return;
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
-    isSatisfying = true;
-    satisfaction += 2;
-
-    if (satisfactionSound.getStatus() != sf::Sound::Playing) {
-      satisfactionSound.play();
+    if (state->hasBegun) {
+      isSatisfying = true;
+      satisfaction += 2;
+      
+      if (satisfactionSound.getStatus() != sf::Sound::Playing) {
+	satisfactionSound.play();
+      }
     }
   } else {
     satisfactionSound.stop();
@@ -129,6 +131,7 @@ void Player::update() {
     sf::sleep(delayTime);
     
     state->currentLevel++;
+    state->enemies.clear();
     state->setup();
     satisfactionSound.stop();
   }

@@ -31,6 +31,14 @@ void PlayState::setup() {
 
   gameClock.restart();
 
+  canGoNextLevel = true;
+  canGoPreviousLevel = true;
+
+  hasBegun = false;
+  beginClock.restart();
+}
+
+void PlayState::addEnemies() {
   enemies.clear();
   maxEnemies = 10;
   for (int i = 0; i < maxEnemies; i++) {
@@ -39,14 +47,11 @@ void PlayState::setup() {
     else
       enemies.push_back(new Enemy(game, this, true));
   }
-
-  canGoNextLevel = true;
-  canGoPreviousLevel = true;
 }
 
 void PlayState::update() {
   player->update();
-
+  
   for (int i = 0; i < (int) enemies.size(); i++) {
     enemies[i]->update();
   }
@@ -58,6 +63,14 @@ void PlayState::update() {
   if (countDownSeconds <= 0) {
     player->satisfactionSound.stop();
     game->currentState = new GameOverState(game, 1);
+  }
+
+  int beginCountDown = 3 - beginClock.getElapsedTime().asSeconds();
+
+  if (beginCountDown <= 0 && !hasBegun) {
+    addEnemies();
+    beginCountDown = 10;
+    hasBegun = true;
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {

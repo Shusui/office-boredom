@@ -9,12 +9,14 @@
 #include "Collision.hpp"
 #include "GameOverState.hpp"
 
-/*Forward declaration so that PlayState *state can exist
-  
+/*
+  Forward declaration so that PlayState *state can exist.
+
   We don't need to include header because it's only a pointer and
   including the header would create an error of mutually depentend
-  classes
+  classes.
 */
+
 class PlayState;
 
 class Player: public Collision {
