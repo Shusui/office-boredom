@@ -104,19 +104,15 @@ void Player::update() {
   sprite.setTextureRect(sf::IntRect((int)floor(spriteSource.x)*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
   sprite.setPosition(x, y);
 
-  if (!sf::Keyboard::isKeyPressed(sf::Keyboard::F) && !moved) {
+  if (!sf::Keyboard::isKeyPressed(sf::Keyboard::F) || moved) {
     satisfactionSound.stop();
     isSatisfying = false;
     satisfaction -= 0.25;
     if (satisfaction <0) satisfaction=0;
     satisfactionFill.setSize(sf::Vector2f(satisfaction, 5));
+    return;
   }
 
-  if (moved) {
-    satisfactionSound.stop();
-  }
-
-  if (x != oldX || y != oldY) return;
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
     if (state->hasBegun) {
       isSatisfying = true;
