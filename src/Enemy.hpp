@@ -19,8 +19,12 @@ class Enemy: public Collision {
 
     float x;
     float y;
-    int speedX;
-    int speedY;
+    float speedX;
+    float speedY;
+
+    sf::Clock searchPlayerClock;
+    sf::Clock randomMoveClock;
+    vector<sf::Vector2f> path;
 
   public:
     Enemy(PlayState*, float _x, float _y);

@@ -9,7 +9,7 @@ Player::Player(Game *_game, PlayState *_state) {
   state = _state;
   x = 0;
   y = 0;
-  speed = 5;
+  speed = 2;
 
   buffer.loadFromFile("res/satisfaction_sound.wav");
   satisfactionSound.setBuffer(buffer);
@@ -18,8 +18,6 @@ Player::Player(Game *_game, PlayState *_state) {
   texture = game->myTextureFactory.findTexture("player");
   sprite.setTexture(*texture);
   sprite.scale(0.70, 0.70);
-
-  srand(time(NULL));
 
   do {
     x = (int)(rand() % state->tilemap->width);

@@ -6,48 +6,63 @@ Enemy::Enemy(PlayState *_state,float _x, float _y) {
   state = _state;
   x = _x;
   y = _y;
-  srand(time(NULL));
-  speedX = 4;//rand() % 4 + 1;
-  speedY = 4;//rand() % 5 + 1;
+  speedX = (rand() % 3000 - 1500)/(float)1000;
+  speedY = (rand() % 3000 - 1500)/(float)1000;
 
   texture.loadFromFile("res/enemy.png");
   sprite.setTexture(texture);
   sprite.setScale(0.5,0.5);
-  x = 2*32;
-  y = 2*32;
+  
+  do {
+    x = (int)(rand() % state->tilemap->width);
+    y = (int)(rand() % state->tilemap->height);
+  } while (state->tilemap->rawMap[(int) y][(int) x]->type != GROUND);
+  x *= state->tilemap->tileSize;
+  y *= state->tilemap->tileSize;
   sprite.setPosition(x,y);
+
+  searchPlayerClock.restart();
+  randomMoveClock.restart();
 }
 
 void Enemy::update() {
   float old_x = x;
   float old_y = y;
 
-  //x += speedX;
-  //y += speedY;
-
-  //wallCollision(old_x,old_y);
-
-  /*if (x < 0) {
-    x = 0;
-    speedX *= (-1);
-  } else if (x > 608) {
-    x = 608;
-    speedX *= (-1);
+  int searchPlayerCountdown = 200 - searchPlayerClock.getElapsedTime().asMilliseconds();
+  if(searchPlayerCountdown<=0){
+    if(abs(state->player->sprite.getPosition().x-x)<100 && abs(state->player->sprite.getPosition().y-y)<100)
+      path = pathToTarget();
+    //printf("%d\n",(int)path.size());
+    searchPlayerClock.restart();
   }
 
-  if (y < 0) {
-    y = 0;
-    speedY *= (-1);
-  } else if (y > 448) {
-    y = 448;
-    speedY *= (-1);
-  }*/
-  vector<sf::Vector2f> p = pathToTarget();
-  //printf("%d\n",(int)p.size());
-  if((int)p.size()==0)
+  if((int)path.size()>0){
+    x = path[(int)path.size()-1].x;
+    y = path[(int)path.size()-1].y;
+    path.erase(path.end()-1);
+    sprite.setPosition(x, y);
     return;
-  x = p[(int)p.size()-1].x;
-  y = p[(int)p.size()-1].y;
+  }
+
+  int randomMoveCountdown = 5000 - randomMoveClock.getElapsedTime().asMilliseconds();
+  if(randomMoveCountdown<=0){
+    do{
+      speedX = (rand() % 3000 - 1500)/(float)1000;
+      speedY = (rand() % 3000 - 1500)/(float)1000;
+    } while(speedY==0 && speedX==0);
+    randomMoveClock.restart();
+  }
+
+  x += speedX;
+  y += speedY;
+
+  /*if((int)path.size()==0)
+    return;
+  x = path[(int)path.size()-1].x;
+  y = path[(int)path.size()-1].y;
+  path.erase(path.end()-1);*/
+  wallCollision(old_x,old_y);
   sprite.setPosition(x, y);
 }
 
@@ -133,11 +148,13 @@ vector<sf::Vector2f> Enemy::pathToTarget(){
   int i,min,idx,my,mx;
   float tx;
   float ty;
+  float speedX = 1;
+  float speedY = 1;
   vector<sf::Vector2f> ret;
   sf::Vector2f target;
   target.x = floor(state->player->sprite.getPosition().x/speedX)*speedX;
   target.y = floor(state->player->sprite.getPosition().y/speedY)*speedY;
-  
+ 
   if(x == target.x && y==target.y)
     return ret;
 
@@ -158,10 +175,9 @@ vector<sf::Vector2f> Enemy::pathToTarget(){
   gscore.push_back(0);
 
   int count=0;
-  while(1){
+  while(count<=100){
     ++count;
-    if(count>=400) return ret;
-    //printf("COUNT: %d SIZE: %d\n",++count,(int)set.size());
+    //printf("COUNT: %d SIZE: %d\n",count,(int)set.size());
     for(i=0;i<(int)closed.size();i++){
       if(closed[i]==false){
         idx = i;
@@ -185,8 +201,8 @@ vector<sf::Vector2f> Enemy::pathToTarget(){
     }
 
     sf::Vector2f current;
-    current.x = set[idx].x;
-    current.y = set[idx].y;
+    current.x = floor(set[idx].x/speedX)*speedX;
+    current.y = floor(set[idx].y/speedY)*speedY;
     closed[idx]=true;
   
     for(ty = current.y-speedY; ty <= current.y+speedY;ty+=speedY){

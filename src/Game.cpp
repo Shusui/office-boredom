@@ -1,6 +1,7 @@
 #include "Game.hpp"
 #include "TitleState.hpp"
 #include "PlayState.hpp"
+#include <time.h>
 
 Game::Game() {
   title = "Office Boredom";
@@ -15,7 +16,8 @@ Game::Game() {
   windowFocused = true;
 
   arialFont.loadFromFile("res/arial.ttf");
-
+  
+  srand(time(NULL));
   currentState = new TitleState(this);
   lastTime = 0;
 }

@@ -24,7 +24,7 @@ class Player: public Collision {
 
     float x;
     float y;
-    int speed;
+    float speed;
 
     sf::SoundBuffer buffer;
     sf::Sound satisfactionSound;
