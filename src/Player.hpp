@@ -41,7 +41,7 @@ class Player: public Collision {
     sf::Sprite sprite;
 
     int satisfaction;
-    sf::RectangleShape satisfactionOutline;
+    int maxSatisfaction;
     sf::RectangleShape satisfactionFill;
 };
 

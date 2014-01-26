@@ -20,9 +20,6 @@ class PlayState : public State {
     std::string gameClockString;
     sf::Text gameClockText;
 
-    int windowWidth;
-    int windowHeight;
-
     sf::Clock gameClock;
     
   public:    
@@ -36,6 +33,9 @@ class PlayState : public State {
     Player *player;
     std::vector<Enemy*> enemies;
     int maxEnemies;
+
+    int windowWidth;
+    int windowHeight;
 };
 
 #endif
