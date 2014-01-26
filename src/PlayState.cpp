@@ -43,7 +43,7 @@ void PlayState::update() {
     enemies[i]->update();
   }
 
-  int countDownSeconds = 60 - gameClock.getElapsedTime().asSeconds();
+  int countDownSeconds = 90 - gameClock.getElapsedTime().asSeconds();
   gameClockString = std::to_string((int) floor(countDownSeconds / 60)) + ":"
     + std::to_string((int) (countDownSeconds - floor(countDownSeconds / 60) * 60));
 
