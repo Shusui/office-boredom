@@ -12,6 +12,7 @@ Enemy::Enemy(PlayState *_state,float _x, float _y) {
   texture.loadFromFile("res/enemy.png");
   sprite.setTexture(texture);
   sprite.setScale(0.5,0.5);
+  sprite.setPosition(x,y);
 }
 
 void Enemy::update() {
@@ -107,6 +108,49 @@ void Enemy::wallCollision(float old_x, float old_y){
         return;
       }
     }
+  }
+
+}
+
+void Enemy::pathToTarget(){
+  sf::Vector2f target;
+  target.x = state->player->sprite.getPosition().x;
+  target.y = state->player->sprite.getPosition().y;
+
+  vector<sf::Vector2f> openset;
+  vector<sf::Vector2f> closedset;
+  vector<float> fscore;
+  vector<float> gscore;
+
+  sf::Vector2f tmp;
+  tmp.x = x;
+  tmp.y = y;
+  openset.push_back(tmp);
+  //Need function to calculate distance
+  fscore.push_back(1);
+  gscore.push_back(0);
+
+  while(openset.size()>0){
+    int min = fscore[0];
+    int idx = 0;
+    for(int i=1;i<(int)fscore.size();i++){
+      if(fscore[i] < min){
+        min = fscore[i];
+        idx = i;
+      }
+    }
+    sf::Vector2f current;
+    current.x = openset[idx].x;
+    current.y = openset[idx].y;
+
+    for(y = current.y-1; y <= current.y+1;y++){
+      for(x = current.x-1; x <= current.x+1;x++){
+         
+      }
+    }
+
+    
+ 
   }
 
 }
