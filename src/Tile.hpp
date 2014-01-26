@@ -14,13 +14,18 @@ class Tile {
   private:
     Game *game;
 
+    int x;
+    int y;
+    int tileSize;
+    
     sf::Texture *texture;
 
   public:
-    Tile(Game *_game, int _type);
+    Tile(Game *_game, int _x, int _y, int _tileSize, int _type);
     Tile(Game *_game, int _type, char tileName[]);
 
     TileType type;
+    int drawType;
     sf::Sprite sprite;
 };
 

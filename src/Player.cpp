@@ -17,7 +17,7 @@ Player::Player(Game *_game, PlayState *_state) {
 
   texture = game->myTextureFactory.findTexture("player");
   sprite.setTexture(*texture);
-
+  
   do {
     x = (int)(rand() % state->tilemap->width);
     y = (int)(rand() % state->tilemap->height);

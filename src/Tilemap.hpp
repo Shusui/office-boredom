@@ -12,15 +12,18 @@
 class Tilemap {
   private:
     int getWallType(int x, int y);
-    
+
     Game *game;
 
-    int tempMap[MAX_HEIGHT][MAX_WIDTH];
-    
+    const char *fileName;
+
   public:
     Tilemap(Game *_game, const char *fileName, int _width, int _height);
     void draw();
-
+    void fixTiles();
+    void writeToFile();
+    
+    int tempMap[MAX_HEIGHT][MAX_WIDTH];
     Tile *rawMap[MAX_HEIGHT][MAX_WIDTH];
     int width;
     int height;
