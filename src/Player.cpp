@@ -15,9 +15,11 @@ Player::Player(Game *_game, PlayState *_state) {
   satisfactionSound.setBuffer(buffer);
   satisfactionSound.setLoop(true);
 
-  texture = game->myTextureFactory.findTexture("player");
+  texture = game->myTextureFactory.findTexture("player_sprites");
   sprite.setTexture(*texture);
-  
+  spriteSource = sf::Vector2f(0,0);
+  spriteSize = sf::Vector2i(32,32);
+  sprite.setTextureRect(sf::IntRect((int)floor(spriteSource.x)*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
   do {
     x = (int)(rand() % state->tilemap->width);
     y = (int)(rand() % state->tilemap->height);
@@ -43,21 +45,44 @@ void Player::update() {
   float oldY = y;
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+    spriteSource.y=3;
+    spriteSource.x+=0.2;
+    if(spriteSource.x >= (int)texture->getSize().x/spriteSize.x){
+      spriteSource.x = 0; 
+    }
+    
     x -= speed;
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+    spriteSource.y=2;
+    spriteSource.x+=0.2;
+    if(spriteSource.x >= (int)texture->getSize().x/spriteSize.x){
+      spriteSource.x = 0; 
+    }
     x += speed;
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+    spriteSource.y=1;
+    spriteSource.x+=0.2;
+    if(spriteSource.x >= (int)texture->getSize().x/spriteSize.x){
+      spriteSource.x = 0; 
+    }
     y -= speed;
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+    spriteSource.y=0;
+    spriteSource.x+=0.2;
+    if(spriteSource.x >= (int)texture->getSize().x/spriteSize.x){
+      spriteSource.x = 0; 
+    }
     y += speed;
   }
 
+  sprite.setTextureRect(sf::IntRect((int)floor(spriteSource.x)*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
+  //sprite.setTextureRect(sf::IntRect(spriteSource.x*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
   wallCollision(oldX, oldY);
   sprite.setPosition(x, y);
   
