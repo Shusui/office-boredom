@@ -47,6 +47,11 @@ int Tilemap::getWallType(int x, int y) {
   } else if (y == 0 && x == width - 1) {
     return 9;
   } else if (x == 0 && y != 0 && y != height - 1) {
+
+    if (tempMap[y][x + 1] == 1) {
+      return 23;
+    }
+    
     return 6;
   } else if (x == width - 1 && y != 0 && y != height - 1) {
 
@@ -82,7 +87,7 @@ int Tilemap::getWallType(int x, int y) {
       return 17;
     } else if (tempMap[y - 1][x] == 0 && tempMap[y + 1][x] == 1
                && tempMap[y][x - 1] == 0 && tempMap[y][x + 1] == 0) {
-      return 13;
+      return 24;
     } else if (tempMap[y - 1][x] == 1 && tempMap[y + 1][x] == 1
                && tempMap[y][x - 1] == 1 && tempMap[y][x + 1] == 0) {
       return 19;
@@ -98,6 +103,18 @@ int Tilemap::getWallType(int x, int y) {
     } else if (tempMap[y - 1][x] == 1 && tempMap[y + 1][x] == 0
                && tempMap[y][x - 1] == 0 && tempMap[y][x + 1] == 0) {
       return 13;
+    } else if (tempMap[y - 1][x] == 0 && tempMap[y + 1][x] == 1
+               && tempMap[y][x - 1] == 1 && tempMap[y][x + 1] == 1) {
+      return 25;
+    } else if (tempMap[y - 1][x] == 1 && tempMap[y + 1][x] == 1
+               && tempMap[y][x - 1] == 1 && tempMap[y][x + 1] == 1) {
+      return 26;
+    } else if (tempMap[y - 1][x] == 1 && tempMap[y + 1][x] == 0
+               && tempMap[y][x - 1] == 1 && tempMap[y][x + 1] == 0) {
+      return 16;
+    } else if (tempMap[y - 1][x] == 0 && tempMap[y + 1][x] == 1
+               && tempMap[y][x - 1] == 0 && tempMap[y][x + 1] == 1) {
+      return 27;
     }
 
     return 1;

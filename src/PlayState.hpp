@@ -23,21 +23,19 @@ class PlayState : public State {
     int windowWidth;
     int windowHeight;
 
-    int activeEnemies;
-    int spawnCoolDown;
-    
     sf::Clock gameClock;
     
-  public:
-    Tilemap *tilemap;
-    Player *player;
-    Enemy *enemies[10];
-    
+  public:    
     PlayState(Game *_game);
 
     void setup();
     void update();
     void draw();
+
+    Tilemap *tilemap;
+    Player *player;
+    std::vector<Enemy*> enemies;
+    int maxEnemies;
 };
 
 #endif
