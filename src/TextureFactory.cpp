@@ -12,7 +12,7 @@ sf::Texture *TextureFactory::loadTexture(std::string fileName) {
   textureVector[textureVectorSize++] = texture;
 
   textureMap[fileName] = textureVectorSize - 1;
-  
+
   return &(textureVector[textureVectorSize - 1]);
 }
 
