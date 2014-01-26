@@ -29,7 +29,7 @@ void Enemy::update() {
   float old_x = x;
   float old_y = y;
 
-  int searchPlayerCountdown = 200 - searchPlayerClock.getElapsedTime().asMilliseconds();
+  int searchPlayerCountdown = 400 - searchPlayerClock.getElapsedTime().asMilliseconds();
   if(searchPlayerCountdown<=0){
     if(abs(state->player->sprite.getPosition().x-x)<100 && abs(state->player->sprite.getPosition().y-y)<100)
       path = pathToTarget();
@@ -39,7 +39,7 @@ void Enemy::update() {
 
   if((int)path.size()>0){
     //printf("%d\n",(int)path.size());
-    if((int)path.size()<50 && state->player->isSatisfying){
+    if((int)path.size()<75 && state->player->isSatisfying){
       game->currentState = new GameOverState(game,0);
       state->player->satisfactionSound.stop();
     }
@@ -183,7 +183,7 @@ vector<sf::Vector2f> Enemy::pathToTarget(){
   gscore.push_back(0);
 
   int count=0;
-  while(count<=100){
+  while(count<=80){
     ++count;
     //printf("COUNT: %d SIZE: %d\n",count,(int)set.size());
     for(i=0;i<(int)closed.size();i++){
@@ -215,10 +215,10 @@ vector<sf::Vector2f> Enemy::pathToTarget(){
   
     for(ty = current.y-speedY; ty <= current.y+speedY;ty+=speedY){
       if(ty<0) continue;
-      if(ty>480) continue;
+      if(ty>state->windowHeight) continue;
       for(tx = current.x-speedX; tx <= current.x+speedX;tx+=speedX){
         if(tx<0) continue;
-        if(tx>640) continue;
+        if(tx>state->windowWidth) continue;
 
         sf::FloatRect *bounds = new sf::FloatRect(tx,ty,sprite.getGlobalBounds().width,sprite.getGlobalBounds().height);
         for(my=0;my<state->tilemap->height;my++){

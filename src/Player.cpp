@@ -17,6 +17,7 @@ Player::Player(Game *_game, PlayState *_state) {
 
   texture = game->myTextureFactory.findTexture("player_sprites");
   sprite.setTexture(*texture);
+  sprite.scale(0.9,0.9);
   spriteSource = sf::Vector2f(0,0);
   spriteSize = sf::Vector2i(32,32);
   sprite.setTextureRect(sf::IntRect((int)floor(spriteSource.x)*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
