@@ -21,10 +21,14 @@ class PlayState : public State {
     sf::Text gameClockText;
 
     sf::Clock gameClock;
-    
-  public:    
-    PlayState(Game *_game);
 
+    bool canGoNextLevel;
+    bool canGoPreviousLevel;
+    
+  public:
+    PlayState(Game *_game);
+    void reloadLevel();
+    
     void setup();
     void update();
     void draw();
@@ -36,6 +40,8 @@ class PlayState : public State {
 
     int windowWidth;
     int windowHeight;
+
+    int currentLevel;
 };
 
 #endif

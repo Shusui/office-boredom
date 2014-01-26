@@ -21,6 +21,22 @@ Game::Game() {
   lastTime = 0;
 }
 
+int Game::findNumberOfMaps() {
+  int last = 1;
+  char tempFileName[20];
+  sprintf(tempFileName, "res/level%d.txt", last);
+  FILE *lastFile = fopen(tempFileName, "r");
+
+  while (lastFile) {
+    fclose(lastFile);
+    sprintf(tempFileName, "res/level%d.txt", ++last);
+
+    lastFile = fopen(tempFileName, "r");
+  }
+
+  return last - 1;
+}
+
 void Game::run() {
   currentState->setup();
 

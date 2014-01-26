@@ -19,22 +19,6 @@ void MapEditor::setup() {
 
 }
 
-int MapEditor::findNumberOfMaps() {
-  int last = 1;
-  char tempFileName[20];
-  sprintf(tempFileName, "res/level%d.txt", last);
-  FILE *lastFile = fopen(tempFileName, "r");
-
-  while (lastFile) {
-    fclose(lastFile);
-    sprintf(tempFileName, "res/level%d.txt", ++last);
-
-    lastFile = fopen(tempFileName, "r");
-  }
-
-  return last - 1;
-}
-
 void MapEditor::update() {
   sf::Vector2i mouse = sf::Mouse::getPosition(game->window);
 
@@ -61,7 +45,7 @@ void MapEditor::update() {
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
     if (canNewFile) {
-      sprintf(fileName, "res/level%d.txt", findNumberOfMaps() + 1);
+      sprintf(fileName, "res/level%d.txt", game->findNumberOfMaps() + 1);
 
       FILE *newMapFile = fopen(fileName, "w");
 
@@ -112,7 +96,7 @@ void MapEditor::update() {
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-    if (level != findNumberOfMaps()) {
+    if (level != game->findNumberOfMaps()) {
       if (canGoRight) {
         sprintf(fileName, "res/level%d.txt", ++level);
         tilemap = new Tilemap(game, fileName, 20, 15);

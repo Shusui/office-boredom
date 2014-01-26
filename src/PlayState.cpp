@@ -13,19 +13,27 @@ PlayState::PlayState(Game *_game) {
   gameClockText.setColor(sf::Color::White);
 
   /* Set up player, map and other stuff */
-  tilemap = new Tilemap(game, "res/level2.txt", 20, 15);
+  currentLevel = 1;
+
+  setup();
+}
+
+void PlayState::setup() {
+  char tempFileName[20];
+  sprintf(tempFileName, "res/level%d.txt", currentLevel);
+  tilemap = new Tilemap(game, tempFileName, 20, 15);
   player = new Player(game, this);
 
   gameClock.restart();
 
+  enemies.clear();
   maxEnemies = 10;
   for (int i = 0; i < maxEnemies; i++) {
-    enemies.push_back(new Enemy(game,this));
+    enemies.push_back(new Enemy(game, this));
   }
-}
 
-void PlayState::setup() {
-
+  canGoNextLevel = true;
+  canGoPreviousLevel = true;
 }
 
 void PlayState::update() {
@@ -35,11 +43,12 @@ void PlayState::update() {
     enemies[i]->update();
   }
 
-  int countDownSeconds = 120 - gameClock.getElapsedTime().asSeconds();
+  int countDownSeconds = 60 - gameClock.getElapsedTime().asSeconds();
   gameClockString = std::to_string((int) floor(countDownSeconds / 60)) + ":"
     + std::to_string((int) (countDownSeconds - floor(countDownSeconds / 60) * 60));
 
   if (countDownSeconds <= 0) {
+    player->satisfactionSound.stop();
     game->currentState = new GameOverState(game, 1);
   }
 
@@ -48,6 +57,26 @@ void PlayState::update() {
     sf::sleep(delayTime);
 
     game->currentState = new TitleState(game);
+  }
+
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+    if (canGoPreviousLevel && currentLevel != 1) {
+      currentLevel--;
+      setup();
+      canGoPreviousLevel = false;
+    }
+  } else {
+    canGoPreviousLevel = true;
+  }
+
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+    if (canGoNextLevel && currentLevel != game->findNumberOfMaps()) {
+      currentLevel++;
+      setup();
+      canGoNextLevel = false;
+    }
+  } else {
+    canGoNextLevel = true;
   }
 }
 

@@ -19,7 +19,8 @@ class Game {
   public:
     Game();
     void run();
-    
+    int findNumberOfMaps();
+
     sf::RenderWindow window;
     State *currentState;
     bool windowFocused;

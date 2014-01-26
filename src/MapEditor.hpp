@@ -8,8 +8,6 @@
 
 class MapEditor : public State {
   private:
-    int findNumberOfMaps();
-
     Game *game;
 
     bool canWriteFile;
