@@ -2,6 +2,7 @@
 #define GAME_HPP
 
 #include <stdio.h>
+#include <time.h>
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>

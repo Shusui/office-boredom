@@ -13,7 +13,7 @@ TitleState::TitleState(Game *_game) {
   pressToPlayText.setFont(game->arialFont);
   pressToPlayText.setCharacterSize(30);
   pressToPlayText.setPosition(180, 330);
-  pressToPlayText.setString("Press F to start playing");
+  pressToPlayText.setString("Press Space to start playing");
 }
 
 void TitleState::setup() {
@@ -21,7 +21,7 @@ void TitleState::setup() {
 }
 
 void TitleState::update() {
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
     game->currentState = new PlayState(game);
   }
 }

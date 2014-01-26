@@ -29,13 +29,9 @@ Player::Player(Game *_game, PlayState *_state) {
   sprite.setPosition(x, y);
 
   satisfaction = 0;
-  satisfactionOutline.setPosition(5, 5);
-  satisfactionOutline.setSize(sf::Vector2f(200, 30));
-  satisfactionOutline.setOutlineThickness(2);
-  satisfactionOutline.setOutlineColor(sf::Color(255, 0, 0, 50));
-  satisfactionOutline.setFillColor(sf::Color(0, 0, 0, 70));
-  satisfactionFill.setPosition(5, 5);
-  satisfactionFill.setFillColor(sf::Color(255, 0, 0, 30));
+  maxSatisfaction = state->windowWidth;
+  satisfactionFill.setPosition(0, state->windowHeight - 5);
+  satisfactionFill.setFillColor(sf::Color(255, 0, 0));
 }
 
 Player::~Player() {
@@ -70,7 +66,7 @@ void Player::update() {
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
     isSatisfying = true;
-    satisfaction++;
+    satisfaction += 2;
 
     if (satisfactionSound.getStatus() != sf::Sound::Playing) {
       satisfactionSound.play();
@@ -81,9 +77,9 @@ void Player::update() {
   }
 
   /* Handle satisfaction */
-  satisfactionFill.setSize(sf::Vector2f(satisfaction, 30));
+  satisfactionFill.setSize(sf::Vector2f(satisfaction, 5));
 
-  if (satisfaction == 200) {
+  if (satisfaction >= maxSatisfaction) {
     game->currentState = new GameOverState(game, 2);
     satisfactionSound.stop();
   }

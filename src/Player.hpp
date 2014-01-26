@@ -43,6 +43,7 @@ class Player: public Collision {
     int satisfaction;
     bool isSatisfying;
     sf::RectangleShape satisfactionOutline;
+    int maxSatisfaction;
     sf::RectangleShape satisfactionFill;
 };
 
