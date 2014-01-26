@@ -104,6 +104,10 @@ void Player::update() {
   sprite.setTextureRect(sf::IntRect((int)floor(spriteSource.x)*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
   sprite.setPosition(x, y);
   
+  if (!sf::Keyboard::isKeyPressed(sf::Keyboard::F)) satisfaction -= 0.25;
+  if(satisfaction<0) satisfaction=0;
+  satisfactionFill.setSize(sf::Vector2f(satisfaction, 5));
+  
   if (x != oldX || y != oldY) return;
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
     isSatisfying = true;
