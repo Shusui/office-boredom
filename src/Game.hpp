@@ -31,6 +31,7 @@ class Game {
     float fps;
 
     sf::Font arialFont;
+    sf::Font pixelFont;
 
     bool scrolledUp;
     bool scrolledDown;

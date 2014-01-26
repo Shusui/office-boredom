@@ -2,7 +2,7 @@
 #include "TitleState.hpp"
 
 Game::Game() {
-  title = "Office Boredom";
+  title = "Bored At The Office";
   window.create(sf::VideoMode(640, 480, 1), title.c_str(),
                 sf::Style::Titlebar | sf::Style::Close);
 
@@ -14,7 +14,8 @@ Game::Game() {
   windowFocused = true;
 
   arialFont.loadFromFile("res/arial.ttf");
-
+  pixelFont.loadFromFile("res/pixelmix.ttf");
+  
   srand(time(NULL));
 
   currentState = new TitleState(this);
