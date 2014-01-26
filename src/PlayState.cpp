@@ -48,6 +48,10 @@ void PlayState::update() {
   int countDownSeconds = 120 - gameClock.getElapsedTime().asSeconds();
   gameClockString = std::to_string((int) floor(countDownSeconds / 60)) + ":"
     + std::to_string((int) (countDownSeconds - floor(countDownSeconds / 60) * 60));
+
+  if (countDownSeconds <= 0) {
+    game->currentState = new GameOverState(game, 1);
+  }
 }
 
 void PlayState::draw() {

@@ -11,7 +11,7 @@ class GameOverState : public State {
     sf::Text gameOverText;
     
   public:
-    GameOverState(Game *_game);
+    GameOverState(Game *_game, int won);
 
     void setup();
     void update();
