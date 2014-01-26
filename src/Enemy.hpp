@@ -11,11 +11,13 @@
 using namespace std;
 
 class PlayState;
+class Game;
 
 class Enemy: public Collision {
   private:
     sf::Texture texture;
     PlayState *state;
+    Game *game;
 
     float x;
     float y;
@@ -27,7 +29,7 @@ class Enemy: public Collision {
     vector<sf::Vector2f> path;
 
   public:
-    Enemy(PlayState*, float _x, float _y);
+    Enemy(Game*,PlayState*);
 
     void update();
     bool checkCollision(sf::FloatRect);

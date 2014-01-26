@@ -41,6 +41,7 @@ class Player: public Collision {
     sf::Sprite sprite;
 
     int satisfaction;
+    bool isSatisfying;
     sf::RectangleShape satisfactionOutline;
     sf::RectangleShape satisfactionFill;
 };

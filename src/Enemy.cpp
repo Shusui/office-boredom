@@ -2,10 +2,9 @@
 #include "PlayState.hpp"
 #include <math.h>
 
-Enemy::Enemy(PlayState *_state,float _x, float _y) {
+Enemy::Enemy(Game *_game,PlayState *_state) {
   state = _state;
-  x = _x;
-  y = _y;
+  game = _game;
   speedX = (rand() % 3000 - 1500)/(float)1000;
   speedY = (rand() % 3000 - 1500)/(float)1000;
 
@@ -38,6 +37,10 @@ void Enemy::update() {
   }
 
   if((int)path.size()>0){
+    if((int)path.size()<10 && state->player->isSatisfying){
+      game->currentState = new GameOverState(game,0);
+    }
+      
     x = path[(int)path.size()-1].x;
     y = path[(int)path.size()-1].y;
     path.erase(path.end()-1);

@@ -21,7 +21,7 @@ PlayState::PlayState(Game *_game) {
 
   maxEnemies = 10;
   for (int i = 0; i < maxEnemies; i++) {
-    enemies.push_back(new Enemy(this, rand() % 400 + 200, rand() % 300 + 100));
+    enemies.push_back(new Enemy(game,this));
   }
 }
 

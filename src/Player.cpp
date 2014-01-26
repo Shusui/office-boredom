@@ -69,6 +69,7 @@ void Player::update() {
   if (x != oldX || y != oldY) return;
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
+    isSatisfying = true;
     satisfaction++;
 
     if (satisfactionSound.getStatus() != sf::Sound::Playing) {
@@ -76,6 +77,7 @@ void Player::update() {
     }
   } else {
     satisfactionSound.stop();
+    isSatisfying = false;
   }
 
   /* Handle satisfaction */
