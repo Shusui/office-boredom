@@ -17,7 +17,6 @@ Player::Player(Game *_game, PlayState *_state) {
 
   texture = game->myTextureFactory.findTexture("player");
   sprite.setTexture(*texture);
-  sprite.scale(0.70, 0.70);
 
   do {
     x = (int)(rand() % state->tilemap->width);
