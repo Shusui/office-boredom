@@ -9,21 +9,28 @@ GameOverState::GameOverState(Game *_game, int won) {
    */  
   game = _game;
 
-  gameOverText.setFont(game->arialFont);
-  gameOverText.setCharacterSize(70);
-  gameOverText.setPosition(130, 200);
+  gameOverText.setFont(game->pixelFont);
 
   if (won == 0) {
+    gameOverText.setCharacterSize(60);
+    gameOverText.setPosition(75, 200);
+
     gameOverText.setString("You're fired!");
   } else if (won == 1) {
+    gameOverText.setCharacterSize(60);
+    gameOverText.setPosition(90, 200);
+    
     gameOverText.setString("You lost!");
   } else if (won == 2) {
+    gameOverText.setCharacterSize(60);
+    gameOverText.setPosition(90, 200);
+    
     gameOverText.setString("You won!");
   }
 
-  pressToPlayText.setFont(game->arialFont);
-  pressToPlayText.setCharacterSize(30);
-  pressToPlayText.setPosition(180, 330);
+  pressToPlayText.setFont(game->pixelFont);
+  pressToPlayText.setCharacterSize(17);
+  pressToPlayText.setPosition(150, 330);
   pressToPlayText.setString("Press Space to start playing");
 }
 

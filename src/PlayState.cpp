@@ -7,7 +7,7 @@ PlayState::PlayState(Game *_game) {
   windowHeight = game->window.getSize().y;
 
   /* Set up FPS string */
-  gameClockText.setFont(game->arialFont);
+  gameClockText.setFont(game->pixelFont);
   gameClockText.setCharacterSize(12);
   gameClockText.setPosition(windowWidth - 28, 2);
   gameClockText.setColor(sf::Color::White);
@@ -19,6 +19,11 @@ PlayState::PlayState(Game *_game) {
 }
 
 void PlayState::setup() {
+  if (currentLevel > game->findNumberOfMaps()) {
+    game->currentState = new GameOverState(game, 2);
+    return;
+  }
+
   char tempFileName[20];
   sprintf(tempFileName, "res/level%d.txt", currentLevel);
   tilemap = new Tilemap(game, tempFileName, 20, 15);

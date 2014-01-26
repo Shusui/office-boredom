@@ -5,14 +5,14 @@ TitleState::TitleState(Game *_game) {
   windowWidth = game->window.getSize().x;
   windowHeight = game->window.getSize().y;
 
-  titleText.setFont(game->arialFont);
-  titleText.setCharacterSize(72);
-  titleText.setPosition(70, windowHeight / 2);
-  titleText.setString("Office Boredom");
+  titleText.setFont(game->pixelFont);
+  titleText.setCharacterSize(40);
+  titleText.setPosition(50, windowHeight / 2);
+  titleText.setString("Bored At The Office");
 
-  pressToPlayText.setFont(game->arialFont);
-  pressToPlayText.setCharacterSize(30);
-  pressToPlayText.setPosition(180, 330);
+  pressToPlayText.setFont(game->pixelFont);
+  pressToPlayText.setCharacterSize(17);
+  pressToPlayText.setPosition(150, 330);
   pressToPlayText.setString("Press Space to start playing");
 }
 
