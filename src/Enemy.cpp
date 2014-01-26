@@ -9,9 +9,19 @@ Enemy::Enemy(Game *_game,PlayState *_state,bool _followPlayer) {
   speedX = (rand() % 3000 - 1500)/(float)1000;
   speedY = (rand() % 3000 - 1500)/(float)1000;
 
-  texture.loadFromFile("res/enemy.png");
+  int r = rand()%3; 
+  if(r==0)
+    texture.loadFromFile("res/enemy1_sprites.png");
+  else if(r==1)
+    texture.loadFromFile("res/enemy2_sprites.png");
+  else if(r==2)
+    texture.loadFromFile("res/enemy3_sprites.png");
+    
   sprite.setTexture(texture);
-  sprite.setScale(0.5,0.5);
+  sprite.setScale(0.9,0.9);
+  spriteSource = sf::Vector2f(0,0);
+  spriteSize = sf::Vector2i(32,32);
+  sprite.setTextureRect(sf::IntRect((int)floor(spriteSource.x)*spriteSize.x,spriteSource.y*spriteSize.y,spriteSize.x,spriteSize.y));
   
   do {
     x = (int)(rand() % state->tilemap->width);
@@ -61,7 +71,6 @@ void Enemy::update() {
     } while(speedY==0 && speedX==0);
     randomMoveClock.restart();
   }
-
 
   x += speedX;
   y += speedY;

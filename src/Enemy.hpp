@@ -24,6 +24,9 @@ class Enemy: public Collision {
     float speedX;
     float speedY;
     bool followPlayer;
+    
+    sf::Vector2f spriteSource;
+    sf::Vector2i spriteSize;
 
     sf::Clock searchPlayerClock;
     sf::Clock randomMoveClock;
