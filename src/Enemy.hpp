@@ -3,9 +3,12 @@
 
 #include <stdio.h>
 #include <time.h>
+#include <vector>
 #include <SFML/Graphics.hpp>
 
 #include "Collision.hpp"
+
+using namespace std;
 
 class PlayState;
 
@@ -25,7 +28,8 @@ class Enemy: public Collision {
     void update();
     bool checkCollision(sf::FloatRect);
     void wallCollision(float,float);
-    void pathToTarget();
+    vector<sf::Vector2f> reconstructPath(vector<int> came_from,vector<sf::Vector2f> set,int idx);
+    vector<sf::Vector2f> pathToTarget();
 
     sf::Sprite sprite;
 };

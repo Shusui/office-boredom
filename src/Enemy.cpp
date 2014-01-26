@@ -1,5 +1,6 @@
 #include "Enemy.hpp"
 #include "PlayState.hpp"
+#include <math.h>
 
 Enemy::Enemy(PlayState *_state,float _x, float _y) {
   state = _state;
@@ -12,17 +13,20 @@ Enemy::Enemy(PlayState *_state,float _x, float _y) {
   texture.loadFromFile("res/enemy.png");
   sprite.setTexture(texture);
   sprite.setScale(0.5,0.5);
-  sprite.setPosition(x,y);
+  //sprite.setPosition(x,y);
+  x = 0;
+  y = 0;
+  sprite.setPosition(0,0);
 }
 
 void Enemy::update() {
   float old_x = x;
   float old_y = y;
 
-  x += speedX;
-  y += speedY;
+  //x += speedX;
+  //y += speedY;
 
-  wallCollision(old_x,old_y);
+  //wallCollision(old_x,old_y);
 
   /*if (x < 0) {
     x = 0;
@@ -39,7 +43,12 @@ void Enemy::update() {
     y = 448;
     speedY *= (-1);
   }*/
-
+  vector<sf::Vector2f> p = pathToTarget();
+  //printf("%d\n",(int)p.size());
+  if((int)p.size()==0)
+    return;
+  x = p[(int)p.size()-1].x;
+  y = p[(int)p.size()-1].y;
   sprite.setPosition(x, y);
 }
 
@@ -112,46 +121,111 @@ void Enemy::wallCollision(float old_x, float old_y){
 
 }
 
-void Enemy::pathToTarget(){
-  sf::Vector2f target;
-  target.x = state->player->sprite.getPosition().x;
-  target.y = state->player->sprite.getPosition().y;
+vector<sf::Vector2f> Enemy::reconstructPath(vector<int> came_from,vector<sf::Vector2f> set,int idx){
+  vector<sf::Vector2f> p;
+  while(came_from[idx]!=-1){
+    p.push_back(set[idx]);
+    idx = came_from[idx]; 
+  }
+  return p;
+}
 
-  vector<sf::Vector2f> openset;
-  vector<sf::Vector2f> closedset;
+vector<sf::Vector2f> Enemy::pathToTarget(){
+  int i,min,idx;
+  float tx;
+  float ty;
+  vector<sf::Vector2f> ret;
+  sf::Vector2f target;
+  target.x = floor(state->player->sprite.getPosition().x/speedX)*speedX;
+  target.y = floor(state->player->sprite.getPosition().y/speedY)*speedY;
+  
+  if(x == target.x && y==target.y)
+    return ret;
+
+  vector<sf::Vector2f> set;
+  vector<bool> closed;
   vector<float> fscore;
   vector<float> gscore;
+  vector<int> came_from;
 
   sf::Vector2f tmp;
   tmp.x = x;
   tmp.y = y;
-  openset.push_back(tmp);
+  set.push_back(tmp);
+  closed.push_back(false);
+  came_from.push_back(-1);
   //Need function to calculate distance
-  fscore.push_back(1);
+  fscore.push_back(abs(target.x-tmp.x)+abs(target.y-tmp.y));
   gscore.push_back(0);
 
-  while(openset.size()>0){
-    int min = fscore[0];
-    int idx = 0;
-    for(int i=1;i<(int)fscore.size();i++){
-      if(fscore[i] < min){
+  int count=0;
+  while(1){
+    ++count;
+    if(count==200) return ret;
+    //printf("COUNT: %d SIZE: %d\n",++count,(int)set.size());
+    for(i=0;i<(int)closed.size();i++){
+      if(closed[i]==false){
+        idx = i;
+        min = fscore[idx];
+        break;
+      }
+    }
+    //printf("IDX: %d\n",idx);
+    if(i==(int)closed.size()) break;
+
+    for(i=idx+1;i<(int)fscore.size();i++){
+      if(fscore[i] < min && closed[i]==false){
         min = fscore[i];
         idx = i;
       }
     }
-    sf::Vector2f current;
-    current.x = openset[idx].x;
-    current.y = openset[idx].y;
-
-    for(y = current.y-1; y <= current.y+1;y++){
-      for(x = current.x-1; x <= current.x+1;x++){
-         
-      }
+    //printf("IDX: %d\n",idx);
+    
+    if(target.x==set[idx].x && target.y==set[idx].y){
+      return reconstructPath(came_from,set,idx);
     }
 
-    
- 
-  }
+    sf::Vector2f current;
+    current.x = set[idx].x;
+    current.y = set[idx].y;
+    closed[idx]=true;
+  
+    for(ty = current.y-speedY; ty <= current.y+speedY;ty+=speedY){
+      if(ty<0) continue;
+      if(ty>480) continue;
+      for(tx = current.x-speedX; tx <= current.x+speedX;tx+=speedX){
+        if(tx<0) continue;
+        if(tx>640) continue;
+         
+        for(i=0;i<(int)set.size();i++){
+          if(set[i].x==tx && set[i].y==ty){
+            break;
+          }
+        }
 
+        if(i==(int)set.size()){
+          tmp.x = tx;
+          tmp.y = ty;
+          //Add distance function
+          set.push_back(tmp);
+          gscore.push_back(gscore[idx]+1);
+          came_from.push_back(idx);
+          fscore.push_back(abs(target.x-tmp.x)+abs(target.y-tmp.y));
+          closed.push_back(false);
+        }
+        else if(closed[i]==true) continue;
+        else if(closed[i]==false){
+          float tmp_g_score = gscore[idx]+1;
+          if(tmp_g_score < gscore[i]){
+            gscore[i]=tmp_g_score;
+            came_from[i]=idx;
+            fscore[i]=abs(target.x-tmp.x)+abs(target.y-tmp.y);
+            closed[i]=false;
+          }
+        }
+      }
+    }
+  }
+  return ret;
 }
 
