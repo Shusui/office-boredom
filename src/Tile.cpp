@@ -3,7 +3,7 @@
 Tile::Tile(Game *_game, int _type) {
   game = _game;
 
-  type = static_cast<TileType>(_type);
+  type = static_cast<TileType>(_type >= 1);
   texture = game->myTextureFactory.findTexture("tile" + std::to_string(_type));
 
   sprite.setTexture(*texture);

@@ -60,8 +60,8 @@ void PlayState::draw() {
 
   tilemap->draw();
   game->window.draw(player->sprite);
-  game->window.draw(player->satisfactionOutline);
-  game->window.draw(player->satisfactionFill);
+  //game->window.draw(player->satisfactionOutline);
+  //game->window.draw(player->satisfactionFill);
 
   for (int i = 0; i < activeEnemies; i++) {
     game->window.draw(enemies[i]->sprite);
