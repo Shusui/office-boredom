@@ -1,5 +1,5 @@
-CXX = g++ -std=c++11
-CXXFLAGS = -g -Wall
+CXX = g++
+CXXFLAGS = -g -Wall -std=c++11
 CXXLIBS = -lsfml-window -lsfml-graphics -lsfml-system -lsfml-audio
 SRCDIR = src
 BUILDDIR = build
