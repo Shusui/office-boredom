@@ -13,7 +13,6 @@ Game::Game() {
 
   windowFocused = true;
 
-  arialFont.loadFromFile("res/arial.ttf");
   pixelFont.loadFromFile("res/pixelmix.ttf");
   
   srand(time(NULL));
